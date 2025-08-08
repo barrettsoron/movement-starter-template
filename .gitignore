@@ -1,0 +1,59 @@
+# build output
+dist
+
+# dependencies
+node_modules/
+.snowpack/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+
+# macOS-specific files
+.DS_Store
+
+# IDE settings and dictionaries (commented out to include in template)
+# .vscode
+# .idea
+
+# Cursor AI IDE
+.cursor/
+.cursorrules
+
+# Claude Code AI assistant
+.claude/
+CLAUDE.md
+
+# package lock
+package-lock.json
+
+# astro build files
+.astro
+
+# deployment and hosting
+.vercel/
+.netlify/
+.firebase/
+
+# temporary files and caches
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# movement/campaign specific temp files
+*-draft.*
+*-backup.*
+/temp/
+/drafts/

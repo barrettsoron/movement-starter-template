@@ -1,0 +1,55 @@
+---
+import Navigation from '../components/Navigation.astro'
+import { DarkMode, SkipLink } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+import { siteConfig, isFeatureEnabled } from '../site.config'
+
+/**
+ * Header Component
+ *
+ * @description A component that displays the header of the website with configurable navigation
+ */
+
+const mainNavItems = siteConfig.navigation.main.filter(item => 
+  isFeatureEnabled(item.show)
+)
+---
+
+<header>
+  <SkipLink />
+  <Navigation>
+    {mainNavItems.map((item: any) => (
+      <li class={`menu-item ${item.highlight ? 'highlight' : ''}`}>
+        <a href={item.href}>{item.label}</a>
+      </li>
+    ))}
+    <li class="menu-item type-icon animate-rotate">
+      <a href="https://github.com/incluud/accessible-astro-starter">
+        <Icon name="lucide:github" />
+        <span class="sr-only">Go to the GitHub page</span>
+      </a>
+    </li>
+    {siteConfig.features.darkMode && (
+      <li class="menu-item type-icon animate-rotate">
+        <DarkMode>
+          <Icon name="lucide:moon" slot="light" />
+          <Icon name="lucide:sun" slot="dark" />
+        </DarkMode>
+      </li>
+    )}
+  </Navigation>
+</header>
+
+<style lang="scss" is:global>
+  header {
+    .type-icon {
+      display: block;
+      margin-inline: -7px;
+
+      svg {
+        inline-size: 30px;
+        block-size: 30px;
+      }
+    }
+  }
+</style>

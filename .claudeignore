@@ -1,0 +1,65 @@
+# Claude Code ignore file
+# Files and patterns that Claude Code should not read or analyze
+
+# Dependencies and build outputs
+node_modules/
+dist/
+.astro/
+.cache/
+.parcel-cache/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Environment files (may contain secrets)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE and editor files
+.vscode/
+.idea/
+.cursor/
+
+# Version control
+.git/
+
+# Deployment and hosting
+.vercel/
+.netlify/
+.firebase/
+
+# Large media files that don't need analysis
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.mp4
+*.mov
+*.avi
+*.pdf
+*.zip
+*.tar.gz
+
+# Movement/campaign specific
+*-draft.*
+*-backup.*
+/temp/
+/drafts/
+/archive/
+
+# Documentation that doesn't need frequent analysis
+README-original.md
+CHANGELOG.md
+LICENSE
