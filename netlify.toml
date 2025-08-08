@@ -1,40 +1,83 @@
 [build]
-  command = "npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20.5.1"
+  NODE_VERSION = "20.9.0"
 
 # Production environment (main branch)
-[context.production]
-  environment = { PUBLIC_ENVIRONMENT = "production" }
-
 [context.production.environment]
   NODE_ENV = "production"
+  PUBLIC_ENVIRONMENT = "production"
+  # Full feature set enabled for production
+  PUBLIC_FEATURE_UPDATES = "true"
+  PUBLIC_FEATURE_STORIES = "true"
+  PUBLIC_FEATURE_EVENTS = "true"
+  PUBLIC_FEATURE_DARKMODE = "true"
+  PUBLIC_FEATURE_NEWSLETTER = "true"
+  PUBLIC_FEATURE_DONATIONS = "true"
+  # Production-specific URLs and branding
+  PUBLIC_BASE_URL = "https://yoursite.com"
+  PUBLIC_PRODUCTION_URL = "https://yoursite.com"
 
 # Staging environment (staging branch)  
-[context.staging]
-  environment = { PUBLIC_ENVIRONMENT = "staging" }
-
 [context.staging.environment]
   NODE_ENV = "production"
+  PUBLIC_ENVIRONMENT = "staging"
+  # All features enabled for staging testing
+  PUBLIC_FEATURE_UPDATES = "true"
+  PUBLIC_FEATURE_STORIES = "true"
+  PUBLIC_FEATURE_EVENTS = "true"
+  PUBLIC_FEATURE_DARKMODE = "true"
+  PUBLIC_FEATURE_NEWSLETTER = "true"
+  PUBLIC_FEATURE_DONATIONS = "true"
+  # Staging-specific URLs
+  PUBLIC_BASE_URL = "https://staging--yoursite.netlify.app"
+  PUBLIC_STAGING_URL = "https://staging--yoursite.netlify.app"
+  # Test branding to distinguish from production
+  PUBLIC_SITE_NAME = "Movement Site [STAGING]"
 
 # Development environment (dev branch)
-[context.dev]
-  environment = { PUBLIC_ENVIRONMENT = "development" }
-
 [context.dev.environment]
   NODE_ENV = "development"
+  PUBLIC_ENVIRONMENT = "development"
+  # Enable most features for development testing
+  PUBLIC_FEATURE_UPDATES = "true"
+  PUBLIC_FEATURE_STORIES = "true"
+  PUBLIC_FEATURE_EVENTS = "true"
+  PUBLIC_FEATURE_DARKMODE = "true"
+  PUBLIC_FEATURE_NEWSLETTER = "false"
+  PUBLIC_FEATURE_DONATIONS = "false"
+  # Development branding
+  PUBLIC_SITE_NAME = "Movement Site [DEV]"
 
 # Branch deploy environment
 [context.branch-deploy.environment]
   NODE_ENV = "development"
   PUBLIC_ENVIRONMENT = "preview"
+  # Minimal features for branch testing
+  PUBLIC_FEATURE_UPDATES = "true"
+  PUBLIC_FEATURE_STORIES = "true"
+  PUBLIC_FEATURE_EVENTS = "false"
+  PUBLIC_FEATURE_DARKMODE = "true"
+  PUBLIC_FEATURE_NEWSLETTER = "false"
+  PUBLIC_FEATURE_DONATIONS = "false"
+  # Preview branding
+  PUBLIC_SITE_NAME = "Movement Site [PREVIEW]"
 
 # Deploy preview environment (PRs)
 [context.deploy-preview.environment]
   NODE_ENV = "development"
   PUBLIC_ENVIRONMENT = "preview"
+  # Conservative feature set for PR reviews
+  PUBLIC_FEATURE_UPDATES = "true"
+  PUBLIC_FEATURE_STORIES = "true"
+  PUBLIC_FEATURE_EVENTS = "false"
+  PUBLIC_FEATURE_DARKMODE = "true"
+  PUBLIC_FEATURE_NEWSLETTER = "false"
+  PUBLIC_FEATURE_DONATIONS = "false"
+  # PR preview branding
+  PUBLIC_SITE_NAME = "Movement Site [PR PREVIEW]"
 
 # SPA rewrite: serve index.html for all routes
 [[redirects]]
@@ -47,18 +90,7 @@
   for = "/*"
   [headers.values]
   # Content Security Policy - adjust as needed for your dependencies
-  Content-Security-Policy = """
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io https://cdn.jsdelivr.net;
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https: blob:;
-    font-src 'self' data:;
-    connect-src 'self' https://plausible.io;
-    frame-ancestors 'none';
-    base-uri 'self';
-    form-action 'self';
-    upgrade-insecure-requests;
-  """
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
   
   # Security headers
   X-Frame-Options = "DENY"
@@ -67,16 +99,7 @@
   X-XSS-Protection = "1; mode=block"
   
   # Permission policy (formerly Feature Policy)
-  Permissions-Policy = """
-    accelerometer=(),
-    camera=(),
-    geolocation=(),
-    gyroscope=(),
-    magnetometer=(),
-    microphone=(),
-    payment=(),
-    usb=()
-  """
+  Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
   
   # HSTS (uncomment when using HTTPS in production)
   # Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"

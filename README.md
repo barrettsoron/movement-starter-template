@@ -55,7 +55,7 @@ All site configuration is managed through environment variables. Copy `.env.exam
 ### Netlify (Recommended)
 
 1. Connect your GitHub repository to Netlify
-2. Set build command: `npm run build`
+2. Set build command: `npm install && npm run build`
 3. Set publish directory: `dist`
 4. Configure environment variables in Netlify dashboard
 5. Enable branch deploys for staging

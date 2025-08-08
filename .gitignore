@@ -32,7 +32,7 @@ yarn-error.log*
 CLAUDE.md
 
 # package lock
-package-lock.json
+# package-lock.json (needed for npm ci in CI/CD)
 
 # astro build files
 .astro
