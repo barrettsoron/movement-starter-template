@@ -1,276 +1,236 @@
-# Multi-Environment Development Workflow
+# Multi-Environment Development & Deployment
 
-This document explains how to use the Movement Starter Template's multi-environment deployment system for efficient development and safe releases.
+This document explains the Movement Starter Template's multi-environment deployment system for safe releases and efficient development.
 
 ## Environment Overview
 
-The template supports four deployment environments, each with specific purposes and configurations:
-
-| Environment | Branch | URL Pattern | Purpose |
-|-------------|--------|-------------|---------|
-| **Production** | `main` | `yoursite.com` | Live site for users |
-| **Staging** | `staging` | `staging--yoursite.netlify.app` | Final testing before production |
-| **Development** | `dev` | `dev--yoursite.netlify.app` | Active development and feature testing |
-| **Preview** | Feature branches | `branch-name--yoursite.netlify.app` | Individual feature testing |
+| Environment        | Branch/Context   | URL Pattern                         | Purpose                | Feature Set                             |
+| ------------------ | ---------------- | ----------------------------------- | ---------------------- | --------------------------------------- |
+| **Production**     | `main`           | `yoursite.com`                      | Live site for users    | All features                            |
+| **Staging**        | `staging`        | `staging--yoursite.netlify.app`     | Pre-production testing | All features + staging branding         |
+| **Development**    | `dev`            | `dev--yoursite.netlify.app`         | Development testing    | Core features (no donations/newsletter) |
+| **Branch Deploy**  | Feature branches | `branch-name--yoursite.netlify.app` | Feature testing        | Minimal features                        |
+| **Deploy Preview** | Pull requests    | `pr-123--yoursite.netlify.app`      | PR review              | Conservative features                   |
 
 ## Environment Configurations
 
-Each environment has different feature sets and branding to distinguish them:
+### Production (`main` branch)
 
-### Production Environment (`main` branch)
 ```bash
+PUBLIC_ENVIRONMENT="production"
+PUBLIC_BASE_URL="https://yoursite.com"
+PUBLIC_SITE_NAME="Your Movement Site"
 # All features enabled
 PUBLIC_FEATURE_UPDATES=true
-PUBLIC_FEATURE_STORIES=true  
-PUBLIC_FEATURE_EVENTS=true
-PUBLIC_FEATURE_DARKMODE=true
-PUBLIC_FEATURE_NEWSLETTER=true
-PUBLIC_FEATURE_DONATIONS=true
-
-# Production branding
-PUBLIC_SITE_NAME="Your Movement Site"
-PUBLIC_BASE_URL="https://yoursite.com"
-```
-
-### Staging Environment (`staging` branch)
-```bash
-# All features enabled for testing
-PUBLIC_FEATURE_UPDATES=true
 PUBLIC_FEATURE_STORIES=true
 PUBLIC_FEATURE_EVENTS=true
 PUBLIC_FEATURE_DARKMODE=true
 PUBLIC_FEATURE_NEWSLETTER=true
 PUBLIC_FEATURE_DONATIONS=true
+```
 
-# Staging branding (notice the [STAGING] tag)
-PUBLIC_SITE_NAME="Movement Site [STAGING]"
+### Staging (`staging` branch)
+
+```bash
+PUBLIC_ENVIRONMENT="staging"
 PUBLIC_BASE_URL="https://staging--yoursite.netlify.app"
+PUBLIC_SITE_NAME="Movement Site [STAGING]"
+# All features enabled for comprehensive testing
 ```
 
-### Development Environment (`dev` branch)
-```bash
-# Most features enabled, but external integrations disabled
-PUBLIC_FEATURE_UPDATES=true
-PUBLIC_FEATURE_STORIES=true
-PUBLIC_FEATURE_EVENTS=true
-PUBLIC_FEATURE_DARKMODE=true
-PUBLIC_FEATURE_NEWSLETTER=false  # Disabled to prevent test emails
-PUBLIC_FEATURE_DONATIONS=false   # Disabled to prevent test payments
+### Development (`dev` branch)
 
-# Development branding
+```bash
+PUBLIC_ENVIRONMENT="development"
 PUBLIC_SITE_NAME="Movement Site [DEV]"
+# Sensitive features disabled
+PUBLIC_FEATURE_NEWSLETTER=false  # Prevents test emails
+PUBLIC_FEATURE_DONATIONS=false   # Prevents test payments
 ```
 
-### Preview Environment (Feature branches & PRs)
+### Preview (Feature branches & PRs)
+
 ```bash
-# Minimal feature set for focused testing
-PUBLIC_FEATURE_UPDATES=true
-PUBLIC_FEATURE_STORIES=true
-PUBLIC_FEATURE_EVENTS=false      # Disabled for simplicity
-PUBLIC_FEATURE_DARKMODE=true
+PUBLIC_ENVIRONMENT="preview"
+PUBLIC_SITE_NAME="Movement Site [PREVIEW]"
+# Minimal features for focused testing
+PUBLIC_FEATURE_EVENTS=false
 PUBLIC_FEATURE_NEWSLETTER=false
 PUBLIC_FEATURE_DONATIONS=false
-
-# Preview branding
-PUBLIC_SITE_NAME="Movement Site [PREVIEW]"
 ```
+
+## Local Development
+
+Copy `.env.example` to `.env.local` and customize:
+
+```bash
+cp .env.example .env.local
+```
+
+Key local variables:
+
+```bash
+PUBLIC_BASE_URL=http://localhost:4321
+PUBLIC_SITE_NAME=Your Local Site Name
+PUBLIC_ENVIRONMENT=development
+```
+
+## Environment Variable Categories
+
+### Core Configuration
+
+- `PUBLIC_BASE_URL` - Site URL for current environment
+- `PUBLIC_SITE_NAME` - Site name with environment indicator
+- `PUBLIC_ENVIRONMENT` - Environment identifier
+
+### Feature Flags
+
+- `PUBLIC_FEATURE_UPDATES` - News/updates section
+- `PUBLIC_FEATURE_STORIES` - Personal stories section
+- `PUBLIC_FEATURE_EVENTS` - Events listing
+- `PUBLIC_FEATURE_NEWSLETTER` - Newsletter signup
+- `PUBLIC_FEATURE_DONATIONS` - Donation functionality
+
+### Site Metadata
+
+- `PUBLIC_SITE_TAGLINE` - Site description
+- `PUBLIC_AUTHOR_NAME` - Organization name
+- `PUBLIC_CONTACT_EMAIL` - Contact information
+
+### Campaign Actions
+
+- `PUBLIC_PRIMARY_ACTION` - Main call-to-action text
+- `PUBLIC_PRIMARY_ACTION_URL` - Main CTA link
+- `PUBLIC_DONATE_URL` - Donation page link
 
 ## Development Workflow
 
-### 🚀 Starting New Work
-
-Always start new features from the `dev` branch:
+### 🚀 Start New Feature
 
 ```bash
-# Switch to dev and get latest changes
-git checkout dev
-git pull origin dev
-
-# Create feature branch
+# Always start from dev branch
+git checkout dev && git pull origin dev
 git checkout -b feature/your-feature-name
-
-# Work on your feature
-# Edit files, test locally with `npm run dev`
-
-# Push feature branch (creates preview deploy)
+# Work locally, test with `npm run dev`
 git push -u origin feature/your-feature-name
 ```
 
-**Result**: Your feature gets a preview URL at `https://feature-your-feature-name--yoursite.netlify.app`
+**Result**: Preview deploy at `https://feature-your-feature-name--yoursite.netlify.app`
 
-### 🧪 Testing in Development
-
-When your feature is ready for broader testing:
+### 🧪 Promote to Development
 
 ```bash
-# Switch to dev branch
-git checkout dev
-git pull origin dev
-
-# Merge your feature
+git checkout dev && git pull origin dev
 git merge feature/your-feature-name
-
-# Push to dev (triggers dev deploy)
 git push origin dev
-
-# Clean up feature branch
-git branch -d feature/your-feature-name
-git push origin --delete feature/your-feature-name
+# Clean up: git branch -d feature/your-feature-name
 ```
 
-**Result**: Feature is live at `https://dev--yoursite.netlify.app` for team testing.
+**Result**: Live at `https://dev--yoursite.netlify.app` for team testing
 
-### 🎭 Staging Review
-
-When development testing passes, promote to staging:
+### 🎭 Promote to Staging
 
 ```bash
-# Switch to staging
-git checkout staging
-git pull origin staging
-
-# Merge dev branch (use --no-ff to preserve history)
+git checkout staging && git pull origin staging
 git merge --no-ff dev
-
-# Push to staging (triggers staging deploy)
 git push origin staging
 ```
 
-**Result**: Changes are live at `https://staging--yoursite.netlify.app` for final review.
+**Result**: Live at `https://staging--yoursite.netlify.app` for final review
 
-### 🌟 Production Release
-
-When staging review passes, release to production:
+### 🌟 Release to Production
 
 ```bash
-# Switch to main
-git checkout main  
-git pull origin main
-
-# Merge staging (use --no-ff to preserve history)
+git checkout main && git pull origin main
 git merge --no-ff staging
-
-# Push to production (triggers production deploy)
 git push origin main
 ```
 
-**Result**: Changes are live at your production URL.
+**Result**: Live at production URL
 
-### 🔄 Return to Development
+### Environment Testing Guidelines
 
-After release, switch back to dev for next work cycle:
+| Environment    | Test Focus                | What to Check                             |
+| -------------- | ------------------------- | ----------------------------------------- |
+| **Local**      | Development & debugging   | Basic functionality, styling              |
+| **Dev**        | Feature integration       | Multi-feature interactions, team feedback |
+| **Staging**    | Pre-production validation | Full feature set, real-world scenarios    |
+| **Production** | Live monitoring           | User analytics, error monitoring          |
 
-```bash
-# Switch back to dev
-git checkout dev
+## Customization Guidelines
 
-# Pull any changes from main (usually none, but good practice)
-git pull origin main
+### Adding Environment Variables
+
+1. Add to `.env.example` with commented examples
+2. Update `netlify.toml` for environment-specific values
+3. Use in `site.config.js` with fallback defaults
+4. Document purpose and usage
+
+### Feature Flag Pattern
+
+```javascript
+// site.config.js
+features: {
+  newFeature: import.meta.env.PUBLIC_FEATURE_NEW !== 'false',
+}
 ```
 
-## Testing Guidelines
+```toml
+# netlify.toml
+PUBLIC_FEATURE_NEW = "true"  # or "false" to disable
+```
 
-### Local Testing (`npm run dev`)
-- **Use for**: Initial development and debugging
-- **Test**: Basic functionality, styling, component behavior
-- **Environment**: Uses `.env.local` file for configuration
+### Security Considerations
 
-### Development Environment (`dev` branch)
-- **Use for**: Feature integration testing
-- **Test**: Multi-feature interactions, responsive design
-- **Team access**: Share dev URL with team for feedback
-
-### Staging Environment (`staging` branch)
-- **Use for**: Pre-production validation
-- **Test**: Full feature set, real-world scenarios, performance
-- **Stakeholder review**: Share staging URL with non-technical stakeholders
-
-### Production Environment (`main` branch)
-- **Use for**: Live user traffic
-- **Monitor**: Analytics, user feedback, error monitoring
-- **Updates**: Only via staging promotion (never direct commits)
-
-## Environment-Specific Features
-
-### Newsletter Integration
-- **Enabled**: Production, Staging
-- **Disabled**: Development, Preview
-- **Reason**: Prevents accidental test emails to subscribers
-
-### Donation System
-- **Enabled**: Production, Staging
-- **Disabled**: Development, Preview  
-- **Reason**: Prevents test payments and financial confusion
-
-### Events System
-- **Enabled**: Production, Staging, Development
-- **Disabled**: Preview
-- **Reason**: Simplifies preview testing focus
+- **Only PUBLIC\_ variables** are exposed to the browser
+- **Never commit** actual `.env.local` files
+- **Use public keys only** for client-side services
+- **Keep secrets** in Netlify environment variables without PUBLIC\_ prefix
 
 ## Troubleshooting
 
 ### Branch Out of Sync
-If environments get out of sync, use this recovery workflow:
 
 ```bash
 # Reset dev to match main
-git checkout dev
-git reset --hard origin/main
-git push origin dev --force-with-lease
-
+git checkout dev && git reset --hard origin/main && git push origin dev --force-with-lease
 # Reset staging to match main
-git checkout staging  
-git reset --hard origin/main
-git push origin staging --force-with-lease
+git checkout staging && git reset --hard origin/main && git push origin staging --force-with-lease
 ```
 
 ### Failed Deployment
-1. Check the Netlify deploy logs in the dashboard
-2. Verify all environment variables are set correctly
-3. Test the build locally: `npm run build`
-4. Check for missing dependencies in package.json
+
+1. Check Netlify deploy logs
+2. Verify environment variables are set
+3. Test build locally: `npm run build`
+4. Check package.json dependencies
 
 ### Environment Variables Not Working
-1. Verify variables start with `PUBLIC_` prefix
-2. Check they're set in Netlify dashboard for each environment
-3. Remember: changes to netlify.toml override dashboard settings
+
+1. Verify `PUBLIC_` prefix
+2. Check Netlify dashboard settings
+3. Remember: netlify.toml overrides dashboard
 
 ### Merge Conflicts
-When merging between environments:
 
 ```bash
-# If merge conflicts occur
-git status                    # See conflicted files
+git status              # See conflicted files
 # Edit files to resolve conflicts
-git add .                     # Stage resolved files
-git commit                    # Complete the merge
+git add .               # Stage resolved files
+git commit              # Complete the merge
 ```
 
 ## Best Practices
 
-### 🎯 **Branching**
-- Always create feature branches from `dev`
-- Use descriptive branch names: `feature/user-login`, `fix/mobile-nav`
-- Delete feature branches after merging
-
-### 🚦 **Deployment**
-- Never commit directly to `main` or `staging`
-- Always promote through the workflow: `dev` → `staging` → `main`
-- Test in each environment before promoting
-
-### 🔧 **Configuration**
-- Keep environment-specific settings in `netlify.toml`
-- Use `.env.local` for local development only
-- Document any new environment variables in `.env.example`
-
-### 📝 **Documentation**
-- Update this file when adding new environments
-- Document feature flag changes in commit messages
-- Keep README.md environment URLs current
+- **Branching**: Always create feature branches from `dev`, use descriptive names
+- **Deployment**: Never commit directly to `main` or `staging`, always promote through workflow
+- **Configuration**: Keep environment-specific settings in `netlify.toml`
+- **Documentation**: Document feature flag changes in commit messages
 
 ## Quick Reference
 
 ### Common Commands
+
 ```bash
 # Start new feature
 git checkout dev && git checkout -b feature/name
@@ -278,21 +238,24 @@ git checkout dev && git checkout -b feature/name
 # Promote dev → staging
 git checkout staging && git merge --no-ff dev && git push
 
-# Promote staging → production  
+# Promote staging → production
 git checkout main && git merge --no-ff staging && git push
-
-# Check environment URLs
-# Production: https://yoursite.com
-# Staging: https://staging--yoursite.netlify.app  
-# Dev: https://dev--yoursite.netlify.app
 ```
 
-### Environment Variable Quick Check
-```bash
-# See what's deployed in each environment
-curl -s https://yoursite.com | grep "ENVIRONMENT"
-curl -s https://staging--yoursite.netlify.app | grep "ENVIRONMENT"  
-curl -s https://dev--yoursite.netlify.app | grep "ENVIRONMENT"
-```
+### Environment URLs
 
-This multi-environment system ensures safe, reliable deployments while maintaining development velocity. Always test thoroughly in each environment before promoting to the next level.
+- **Production**: `https://yoursite.com`
+- **Staging**: `https://staging--yoursite.netlify.app`
+- **Dev**: `https://dev--yoursite.netlify.app`
+- **Feature Branch**: `https://branch-name--yoursite.netlify.app`
+
+### Deployment Checklist
+
+- [ ] Update environment URLs in `netlify.toml`
+- [ ] Set appropriate feature flags for environment
+- [ ] Test with staging environment first
+- [ ] Verify environment-specific branding appears
+- [ ] Confirm sensitive features are disabled in non-production
+- [ ] Follow promotion workflow (never skip environments)
+
+This multi-environment system ensures safe, reliable deployments while maintaining development velocity.

@@ -17,8 +17,8 @@
   PUBLIC_FEATURE_NEWSLETTER = "true"
   PUBLIC_FEATURE_DONATIONS = "true"
   # Production-specific URLs and branding
-  PUBLIC_BASE_URL = "https://yoursite.com"
-  PUBLIC_PRODUCTION_URL = "https://yoursite.com"
+  PUBLIC_BASE_URL = "https://yoursite.com" # TEMPLATE: Replace with your production domain
+  PUBLIC_PRODUCTION_URL = "https://yoursite.com" # TEMPLATE: Replace with your production domain
 
 # Staging environment (staging branch)  
 [context.staging.environment]
@@ -32,8 +32,8 @@
   PUBLIC_FEATURE_NEWSLETTER = "true"
   PUBLIC_FEATURE_DONATIONS = "true"
   # Staging-specific URLs
-  PUBLIC_BASE_URL = "https://staging--yoursite.netlify.app"
-  PUBLIC_STAGING_URL = "https://staging--yoursite.netlify.app"
+  PUBLIC_BASE_URL = "https://staging--yoursite.netlify.app" # TEMPLATE: Replace 'yoursite' with your Netlify site name
+  PUBLIC_STAGING_URL = "https://staging--yoursite.netlify.app" # TEMPLATE: Replace 'yoursite' with your Netlify site name
   # Test branding to distinguish from production
   PUBLIC_SITE_NAME = "Movement Site [STAGING]"
 

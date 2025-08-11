@@ -150,6 +150,44 @@ git merge --no-ff staging
 git push origin main
 ```
 
+## Template Customization Checklist
+
+When using this template for a new project, follow these steps:
+
+### 1. Initial Setup
+- [ ] Clone/fork this repository
+- [ ] Update `package.json` with your project name and description
+- [ ] Replace placeholder URLs in `src/site.config.js` (marked with `// TEMPLATE:`)
+- [ ] Replace placeholder URLs in `netlify.toml` (marked with `# TEMPLATE:`)
+- [ ] Update repository URLs in demo pages (`src/pages/markdown-page.md`, `src/pages/mdx-page.mdx`)
+
+### 2. Environment Configuration
+- [ ] Copy `.env.example` to `.env.local`
+- [ ] Set your `PUBLIC_SITE_NAME`
+- [ ] Configure `PUBLIC_BASE_URL` for your domain
+- [ ] Update contact email and social media handles
+- [ ] Toggle feature flags based on your needs
+
+### 3. Content & Branding
+- [ ] Replace the logo in `src/assets/img/logo.svg`
+- [ ] Update social preview image in `public/social-preview-image.png`
+- [ ] Remove demo content from `src/content/` directories
+- [ ] Add your own stories, events, and projects
+- [ ] Customize hero section text in `src/pages/index.astro`
+
+### 4. Deployment Setup
+- [ ] Connect repository to Netlify
+- [ ] Configure environment variables in Netlify dashboard
+- [ ] Set up staging and dev branches
+- [ ] Configure custom domain (if applicable)
+- [ ] Test deployment workflow with a feature branch
+
+### 5. Final Cleanup
+- [ ] Delete `todo.md` after completing setup
+- [ ] Update this README with your project information
+- [ ] Remove or update example content
+- [ ] Test all features in staging before production
+
 ## Customization
 
 ### Navigation

@@ -1,0 +1,44 @@
+---
+// Export all Accessible Astro Components for easy importing
+// Import like: import { Accordion, Card, Modal } from '@components/AccessibleComponents.astro';
+
+export { 
+  Accordion,
+  AccordionItem,
+  Avatar,
+  AvatarGroup,
+  Badge,
+  Breadcrumbs,
+  BreadcrumbsItem,
+  Card,
+  DarkMode,
+  Media,
+  Modal,
+  Notification,
+  Pagination,
+  SkipLink,
+  Tabs,
+  TabsList,
+  TabsPanel,
+  TabsTab,
+  Video
+} from 'accessible-astro-components';
+
+// Also export commonly used project components
+export { default as CallToAction } from './CallToAction.astro';
+export { default as ContentMedia } from './ContentMedia.astro';
+export { default as EventListing } from './EventListing.astro';
+export { default as Feature } from './Feature.astro';
+export { default as Hero } from './Hero.astro';
+export { default as Navigation } from './Navigation.astro';
+export { default as PageHeader } from './PageHeader.astro';
+---
+
+<!-- 
+This file re-exports components from accessible-astro-components package.
+Use it to import multiple components in a single import statement.
+
+Example usage in your .astro files:
+
+import { Accordion, Card, Modal, Hero } from '@components/AccessibleComponents.astro';
+-->
