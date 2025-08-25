@@ -35,10 +35,29 @@ export { default as PageHeader } from './PageHeader.astro';
 ---
 
 <!-- 
-This file re-exports components from accessible-astro-components package.
-Use it to import multiple components in a single import statement.
+IMPORT STRATEGY GUIDE
 
-Example usage in your .astro files:
+For learning and single-component use (RECOMMENDED):
+import { Badge } from 'accessible-astro-components';
 
+For convenience when using many components:
 import { Accordion, Card, Modal, Hero } from '@components/AccessibleComponents.astro';
+
+For project-specific components:
+import CallToAction from '@components/CallToAction.astro';
+
+WHY DIRECT IMPORTS ARE BETTER:
+- Tree shaking: Only bundles components you actually use
+- Clarity: Obvious which library components come from  
+- Learning: Encourages understanding of component APIs
+- Performance: Smaller bundle sizes
+- Maintenance: Easier to track component usage across the project
+
+USE THIS FILE WHEN:
+- Building complex demo pages that use many components
+- Rapid prototyping where bundle size isn't critical
+- You're certain you need most of the available components
+
+For production campaign sites, prefer direct imports from 'accessible-astro-components'.
+See docs/understanding-component-apis.md for detailed guidance.
 -->

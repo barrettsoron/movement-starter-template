@@ -1,0 +1,237 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import CallToAction from '@components/CallToAction.astro'
+import { Badge } from 'accessible-astro-components'
+---
+
+<DefaultLayout
+  title="Updates"
+  description="Latest news and updates from our movement"
+>
+  <PageHeader>
+    <h1>Movement Updates</h1>
+    <p>Stay informed about our latest campaigns, victories, and upcoming actions</p>
+  </PageHeader>
+
+  <section class="container">
+    <div class="updates-grid">
+      <article class="update-card featured">
+        <div class="update-header">
+          <Badge>Featured</Badge>
+          <time datetime="2024-12-15">December 15, 2024</time>
+        </div>
+        <h2>Major Victory: Housing Justice Initiative Passes</h2>
+        <p>
+          After months of organizing, coalition building, and community pressure, 
+          the Housing Justice Initiative has been approved by city council. This 
+          landmark legislation will protect tenants from unfair evictions and 
+          create affordable housing opportunities.
+        </p>
+        <div class="update-actions">
+          <a href="#" class="btn-primary">Read Full Update</a>
+          <a href="#" class="btn-secondary">Share This Victory</a>
+        </div>
+      </article>
+
+      <article class="update-card">
+        <div class="update-header">
+          <Badge>Campaign Update</Badge>
+          <time datetime="2024-12-10">December 10, 2024</time>
+        </div>
+        <h3>Climate Action Campaign Launches</h3>
+        <p>
+          We're launching our biggest climate campaign yet, focusing on renewable 
+          energy jobs and environmental justice. Join us for the kickoff event 
+          this Saturday.
+        </p>
+        <a href="/events" class="read-more">View Upcoming Events →</a>
+      </article>
+
+      <article class="update-card">
+        <div class="update-header">
+          <Badge>Action Alert</Badge>
+          <time datetime="2024-12-08">December 8, 2024</time>
+        </div>
+        <h3>Call Your Representatives</h3>
+        <p>
+          The Economic Justice Act needs your voice! Call your representatives 
+          this week to support legislation that would raise wages and strengthen 
+          worker protections.
+        </p>
+        <a href="#" class="read-more">Get Call Script →</a>
+      </article>
+
+      <article class="update-card">
+        <div class="update-header">
+          <Badge>Community News</Badge>
+          <time datetime="2024-12-05">December 5, 2024</time>
+        </div>
+        <h3>New Leadership Development Program</h3>
+        <p>
+          Applications are now open for our spring leadership development cohort. 
+          This intensive program trains community members in organizing skills, 
+          policy analysis, and campaign strategy.
+        </p>
+        <a href="#" class="read-more">Apply Now →</a>
+      </article>
+
+      <article class="update-card">
+        <div class="update-header">
+          <Badge>Coalition News</Badge>
+          <time datetime="2024-12-01">December 1, 2024</time>
+        </div>
+        <h3>Partnership with Regional Labor Council</h3>
+        <p>
+          We're excited to announce a new partnership with the Regional Labor 
+          Council to strengthen our economic justice campaigns and support 
+          working families.
+        </p>
+        <a href="#" class="read-more">Learn More →</a>
+      </article>
+
+      <article class="update-card">
+        <div class="update-header">
+          <Badge>Media Coverage</Badge>
+          <time datetime="2024-11-28">November 28, 2024</time>
+        </div>
+        <h3>Featured in Local News</h3>
+        <p>
+          Our housing campaign was featured in this week's City Paper, highlighting 
+          the community organizing that made our recent victory possible.
+        </p>
+        <a href="#" class="read-more">Read Article →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="container">
+    <CallToAction>
+      <h2>Stay Updated</h2>
+      <p>
+        Don't miss important campaign updates and action alerts. 
+        Join our newsletter to get the latest news delivered to your inbox.
+      </p>
+      <a href="#" class="btn-primary">Join Our Newsletter</a>
+    </CallToAction>
+  </section>
+</DefaultLayout>
+
+<style lang="scss">
+  .updates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 3rem 0;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      
+      .featured {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  .update-card {
+    padding: 2rem;
+    background: var(--background);
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    &.featured {
+      background: var(--background-alt);
+      border-color: var(--primary-color, #2563eb);
+      border-width: 3px;
+      
+      h2 {
+        font-size: 2rem;
+        margin: 1rem 0;
+        color: var(--heading-color);
+      }
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      color: var(--heading-color);
+    }
+    
+    p {
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 1rem 0;
+    }
+  }
+
+  .update-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    
+    time {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+  }
+
+  .update-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary, .btn-secondary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: 3px solid var(--primary-color, #2563eb);
+      outline-offset: 2px;
+    }
+  }
+
+  .btn-primary {
+    background: var(--primary-color, #2563eb);
+    color: white;
+    
+    &:hover {
+      background: var(--primary-color-dark, #1d4ed8);
+      transform: translateY(-2px);
+    }
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--primary-color, #2563eb);
+    border: 2px solid var(--primary-color, #2563eb);
+    
+    &:hover {
+      background: var(--primary-color, #2563eb);
+      color: white;
+    }
+  }
+
+  .read-more {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+</style>

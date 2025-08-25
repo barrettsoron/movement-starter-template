@@ -1,126 +1,459 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro';
 import { 
-  Accordion, Avatar, AvatarGroup, Badge, Breadcrumbs,
-  Card, Media, Modal, Notification, 
-  Tabs, Video 
+  Accordion, AccordionItem, Avatar, AvatarGroup, Badge, Breadcrumbs,
+  Card, DarkMode, Media, Modal, Notification, Pagination, SkipLinks,
+  Tabs, TabsList, TabsTab, TabsPanel, Video 
 } from 'accessible-astro-components';
+import { Icon } from 'astro-icon/components';
 ---
 
 <DefaultLayout
   title="Accessible Components Demo"
   description="Demonstration of accessible components for movement websites"
 >
+  <SkipLinks />
+  <DarkMode />
+  
   <section class="space-content container">
     <Breadcrumbs>
-      <a href="/">Home</a>
-      <span>Components Demo</span>
+      <li><a href="/">Home</a></li>
+      <li>Components Demo</li>
     </Breadcrumbs>
 
-    <header class="space-content">
+    <header class="demo-header space-content">
       <h1>Accessible Components Demo</h1>
-      <p>A showcase of accessible components optimized for progressive movements and campaigns.</p>
+      <p>See how pre-built components save you time and prevent bugs. Copy these patterns for professional-looking sites that work for everyone.</p>
+      
+      <Notification type="info" role="status">
+        <Icon name="ph:info" />
+        <p><strong>Built for Reliability:</strong> Every component works with keyboards, screen readers, and mobile devices. No testing required—just use them.</p>
+      </Notification>
     </header>
 
-    <Notification type="info">
-      <p>These components are fully keyboard navigable and screen reader compatible.</p>
-    </Notification>
-
-    <section class="space-content">
-      <h2>Campaign Information</h2>
+    <!-- Notification Examples -->
+    <section class="demo-section">
+      <h2>Notifications & Alerts</h2>
+      <p>Get users' attention without being annoying. Works for confirmations, warnings, and important updates that people actually read.</p>
       
-      <Tabs>
-        <div slot="tab">Our Platform</div>
-        <div slot="tab">Get Involved</div>
-        <div slot="tab">Events</div>
-        
-        <div slot="panel">
-          <h3>Fighting for Economic Justice</h3>
-          
-          <Accordion>
-            <div slot="header">Housing Justice</div>
-            <div slot="content">
-              <p>Everyone deserves safe, affordable housing. Our campaign supports rent stabilization, public housing investment, and anti-displacement protections.</p>
-            </div>
-          </Accordion>
-          
-          <Accordion>
-            <div slot="header">Healthcare Access</div>
-            <div slot="content">
-              <p>Healthcare is a human right. We're fighting for universal healthcare coverage and community clinic expansion.</p>
-            </div>
-          </Accordion>
+      <div class="notification-grid">
+        <Notification type="success" role="status">
+          <Icon name="ph:check-circle" />
+          <p><strong>Success!</strong> Your volunteer registration has been confirmed. Welcome to the movement!</p>
+        </Notification>
+
+        <Notification type="warning" role="alert">
+          <Icon name="ph:warning" />
+          <p><strong>Urgent Action Needed:</strong> Contact your representatives about the housing bill before Friday!</p>
+          <a href="#action-form" class="notification-button">Take Action Now</a>
+        </Notification>
+
+        <Notification type="error" role="alert">
+          <Icon name="ph:x-circle" />
+          <p><strong>Event Canceled:</strong> Tomorrow's rally has been postponed due to weather. Check your email for updates.</p>
+        </Notification>
+
+        <Notification type="info">
+          <Icon name="ph:info" />
+          <p><strong>New Feature:</strong> You can now sign up for text alerts to get immediate action notifications.</p>
+          <button id="text-alerts-modal" class="notification-button">Enable Text Alerts</button>
+        </Notification>
+      </div>
+    </section>
+
+    <!-- Badge Examples -->
+    <section class="demo-section">
+      <h2>Badges & Status Indicators</h2>
+      <p>Quick visual cues that help users scan and understand content at a glance. No guessing about what's important.</p>
+      
+      <div class="badge-showcase">
+        <div class="badge-group">
+          <h3>Event Status</h3>
+          <Badge type="success" size="md">Confirmed</Badge>
+          <Badge type="warning" size="md">Registration Required</Badge>
+          <Badge type="error" size="md">Sold Out</Badge>
+          <Badge type="info" size="md">Virtual Event</Badge>
         </div>
         
-        <div slot="panel">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card>
-              <h3 slot="header">Volunteer Opportunities</h3>
-              <div slot="content">
-                <ul>
-                  <li>Phone banking</li>
-                  <li>Door-to-door canvassing</li>
-                  <li>Event organizing</li>
-                  <li>Digital outreach</li>
-                </ul>
-                <Badge variant="success">Always Welcoming New Volunteers</Badge>
-              </div>
-              <div slot="footer">
-                <button id="volunteer-modal" class="button">Sign Up to Volunteer</button>
-              </div>
-            </Card>
+        <div class="badge-group">
+          <h3>Priority Levels</h3>
+          <Badge type="error" size="lg">Urgent</Badge>
+          <Badge type="warning" size="md">Important</Badge>
+          <Badge type="info" size="sm">General</Badge>
+        </div>
+        
+        <div class="badge-group">
+          <h3>Interactive Badges</h3>
+          <Badge isButton animateOnHover label="5 new volunteer signups" type="success">
+            5
+          </Badge>
+          <Badge isButton animateOnHover label="12 upcoming events" type="info">
+            12
+          </Badge>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accordion Examples -->
+    <section class="demo-section">
+      <h2>Accordions & FAQs</h2>
+      <p>Organize complex information, policy details, and frequently asked questions.</p>
+      
+      <div class="accordion-showcase">
+        <div class="accordion-demo">
+          <h3>Platform Details (Default Style)</h3>
+          <Accordion>
+            <AccordionItem 
+              name="platform"
+              title="What is our housing justice platform?"
+              open
+              tagName="h4"
+            >
+              <p>Everyone deserves safe, affordable housing. Our comprehensive housing platform includes:</p>
+              <ul>
+                <li>Rent stabilization and tenant protection laws</li>
+                <li>$5 billion investment in public housing</li>
+                <li>Community land trusts to prevent displacement</li>
+                <li>First-time homebuyer assistance programs</li>
+              </ul>
+              <a href="/platform/housing" class="read-more">Read Full Housing Platform →</a>
+            </AccordionItem>
             
-            <Card>
-              <h3 slot="header">Donate</h3>
-              <div slot="content">
-                <p>Your contribution helps us organize communities and fight for change.</p>
-                <Badge variant="warning">Goal: $10,000 by month end</Badge>
-              </div>
-              <div slot="footer">
-                <button id="donate-modal" class="button">Contribute Now</button>
-              </div>
-            </Card>
-          </div>
+            <AccordionItem 
+              name="platform"
+              title="How will we fund these programs?"
+              tagName="h4"
+            >
+              <p>Our funding strategy focuses on progressive revenue sources:</p>
+              <ul>
+                <li>Corporate tax reform closing loopholes</li>
+                <li>Wealth tax on assets over $50 million</li>
+                <li>Real estate speculation tax</li>
+                <li>Reallocation from harmful subsidies</li>
+              </ul>
+              <Badge type="info" size="sm">Economist-Reviewed Plan</Badge>
+            </AccordionItem>
+            
+            <AccordionItem 
+              name="platform"
+              title="What about small business impacts?"
+              tagName="h4"
+            >
+              <p>We're committed to supporting small businesses while addressing housing inequality:</p>
+              <ul>
+                <li>Small business tax credits and grants</li>
+                <li>Commercial rent stabilization</li>
+                <li>Microloan programs for entrepreneurs</li>
+                <li>Community development financial institutions</li>
+              </ul>
+            </AccordionItem>
+          </Accordion>
         </div>
-        
-        <div slot="panel">
-          <h3>Upcoming Events</h3>
-          <Card>
-            <h4 slot="header">Community Town Hall</h4>
-            <div slot="content">
-              <Media 
-                src="/posts/post-image-1.png" 
-                alt="Previous town hall with community members discussing local issues"
-                caption="Join us for our monthly community input session"
-              />
-              <p><strong>When:</strong> First Saturday of each month, 2-4 PM</p>
-              <p><strong>Where:</strong> Community Center, Main St.</p>
-              <Badge variant="info">Free Event</Badge>
+
+        <div class="accordion-demo">
+          <h3>FAQ Section (Chevron Style)</h3>
+          <Accordion>
+            <AccordionItem 
+              name="faq"
+              title="How can I get involved?"
+              variant="chevron"
+              tagName="h4"
+            >
+              <p>There are many ways to join our movement:</p>
+              <div class="involvement-options">
+                <Card 
+                  title="Volunteer" 
+                  url="#volunteer-modal"
+                >
+                  <p>Phone banking, canvassing, events, and digital organizing.</p>
+                  <Badge type="success" size="sm">Always Welcoming</Badge>
+                </Card>
+                <Card 
+                  title="Donate" 
+                  url="#donate-modal"
+                >
+                  <p>Support our organizing efforts with a contribution.</p>
+                  <Badge type="info" size="sm">Tax Deductible</Badge>
+                </Card>
+              </div>
+            </AccordionItem>
+            
+            <AccordionItem 
+              name="faq"
+              title="What makes this campaign different?"
+              variant="chevron"
+              tagName="h4"
+            >
+              <p>Our campaign is built on community organizing principles:</p>
+              <ul>
+                <li>Leadership development in affected communities</li>
+                <li>Policy solutions driven by lived experience</li>
+                <li>Coalition building across movements</li>
+                <li>Long-term power building, not just electoral wins</li>
+              </ul>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card Examples -->
+    <section class="demo-section">
+      <h2>Cards & Content Display</h2>
+      <p>Showcase events, team members, volunteer opportunities, and campaign updates.</p>
+      
+      <div class="card-showcase">
+        <h3>Upcoming Events</h3>
+        <div class="card-grid">
+          <Card 
+            img="/images/placeholder-rally.jpg"
+            imageAlt="Community members gathering for climate action rally"
+            url="/events/climate-rally"
+            title="Climate Justice Rally"
+            footer="Saturday, March 15th, 2:00 PM"
+          >
+            <p>Join hundreds of community members calling for bold climate action and environmental justice for all neighborhoods.</p>
+            <div class="card-badges">
+              <Badge type="info" size="sm">Free Event</Badge>
+              <Badge type="success" size="sm">All Ages</Badge>
+            </div>
+          </Card>
+          
+          <Card 
+            img="/images/placeholder-training.jpg"
+            imageAlt="Volunteer training session with community organizers"
+            url="/events/organizer-training"
+            title="Community Organizer Training"
+            footer="Wednesday, March 20th, 6:30 PM"
+          >
+            <p>Learn the fundamentals of community organizing, from one-on-ones to campaign strategy.</p>
+            <div class="card-badges">
+              <Badge type="warning" size="sm">Registration Required</Badge>
+              <Badge type="info" size="sm">Dinner Provided</Badge>
+            </div>
+          </Card>
+          
+          <Card 
+            img="/images/placeholder-townhall.jpg"
+            imageAlt="Town hall meeting with diverse community members"
+            url="/events/town-hall"
+            title="Community Town Hall"
+            footer="First Saturday Monthly, 2:00 PM"
+          >
+            <p>Monthly community input sessions where residents shape our policy priorities and campaign strategy.</p>
+            <div class="card-badges">
+              <Badge type="success" size="sm">Child Care Provided</Badge>
+              <Badge type="info" size="sm">Translation Available</Badge>
             </div>
           </Card>
         </div>
+      </div>
+    </section>
+
+    <!-- Tab Examples -->
+    <section class="demo-section">
+      <h2>Tabs & Content Organization</h2>
+      <p>Organize platform details, involvement options, and complex information.</p>
+      
+      <Tabs>
+        <TabsList>
+          <TabsTab id="platform" controls="platform-panel" selected>Our Platform</TabsTab>
+          <TabsTab id="get-involved" controls="involvement-panel">Get Involved</TabsTab>
+          <TabsTab id="endorsements" controls="endorsements-panel">Endorsements</TabsTab>
+        </TabsList>
+        
+        <TabsPanel id="platform-panel" labelledby="platform" selected>
+          <h3>Fighting for Economic Justice</h3>
+          <div class="platform-content">
+            <div class="platform-pillar">
+              <h4>Housing Justice</h4>
+              <p>Safe, affordable housing for all community members through rent stabilization, public housing investment, and anti-displacement protections.</p>
+              <Badge type="info" size="sm">Policy Details Available</Badge>
+            </div>
+            
+            <div class="platform-pillar">
+              <h4>Healthcare Access</h4>
+              <p>Universal healthcare coverage, community clinic expansion, and mental health services as a fundamental human right.</p>
+              <Badge type="success" size="sm">Doctor Endorsed</Badge>
+            </div>
+            
+            <div class="platform-pillar">
+              <h4>Climate Action</h4>
+              <p>Just transition to renewable energy with good union jobs and environmental justice for frontline communities.</p>
+              <Badge type="warning" size="sm">Urgent Priority</Badge>
+            </div>
+          </div>
+        </TabsPanel>
+        
+        <TabsPanel id="involvement-panel" labelledby="get-involved">
+          <h3>Join Our Movement</h3>
+          <div class="involvement-grid">
+            <Card title="Volunteer" url="#volunteer-modal">
+              <ul>
+                <li>Phone banking to voters</li>
+                <li>Door-to-door canvassing</li>
+                <li>Event organizing and support</li>
+                <li>Digital outreach and social media</li>
+              </ul>
+              <Badge type="success" size="sm">Training Provided</Badge>
+            </Card>
+            
+            <Card title="House Parties" url="#house-party-modal">
+              <p>Host a small gathering to introduce neighbors to our campaign and build community connections.</p>
+              <Badge type="info" size="sm">Materials Provided</Badge>
+            </Card>
+            
+            <Card title="Policy Input" url="#policy-feedback">
+              <p>Share your experiences and priorities to help shape our policy platform and campaign strategy.</p>
+              <Badge type="warning" size="sm">Community Voices Needed</Badge>
+            </Card>
+          </div>
+        </TabsPanel>
+        
+        <TabsPanel id="endorsements-panel" labelledby="endorsements">
+          <h3>Community Support</h3>
+          <p>Endorsed by organizations and leaders representing thousands of community members:</p>
+          
+          <div class="endorsement-categories">
+            <div class="endorsement-group">
+              <h4>Labor Organizations</h4>
+              <ul>
+                <li>Local 123 Service Workers Union</li>
+                <li>Teachers Federation District 5</li>
+                <li>Building Trades Council</li>
+                <li>Healthcare Workers United</li>
+              </ul>
+            </div>
+            
+            <div class="endorsement-group">
+              <h4>Community Organizations</h4>
+              <ul>
+                <li>Neighborhood Housing Coalition</li>
+                <li>Climate Action Network</li>
+                <li>Immigrant Rights Alliance</li>
+                <li>Senior Services Council</li>
+              </ul>
+            </div>
+          </div>
+        </TabsPanel>
       </Tabs>
     </section>
 
-    <section class="space-content">
-      <h2>Our Team</h2>
-      <p>Meet the organizers and community leaders driving our movement:</p>
+    <!-- Avatar Examples -->
+    <section class="demo-section">
+      <h2>Team & Community Display</h2>
+      <p>Showcase campaign team, endorsers, and community leaders.</p>
       
-      <AvatarGroup>
-        <Avatar name="Campaign Manager" />
-        <Avatar name="Community Organizer" />
-        <Avatar name="Policy Director" />
-        <Avatar name="Volunteer Coordinator" />
-      </AvatarGroup>
+      <div class="avatar-showcase">
+        <div class="team-section">
+          <h3>Campaign Leadership</h3>
+          <AvatarGroup display="grid">
+            <Avatar 
+              img="/images/placeholder-candidate.jpg"
+              title="Alex Rivera"
+              subtitle="Candidate for City Council"
+              size="lg"
+            />
+            <Avatar 
+              img="/images/placeholder-manager.jpg"
+              title="Sarah Chen"
+              subtitle="Campaign Manager"
+            />
+            <Avatar 
+              initials="MJ"
+              title="Maria Johnson"
+              subtitle="Policy Director"
+              type="info"
+            />
+            <Avatar 
+              initials="DW"
+              title="David Washington"
+              subtitle="Field Organizer"
+              type="success"
+            />
+          </AvatarGroup>
+        </div>
+        
+        <div class="endorser-section">
+          <h3>Community Endorsers (Condensed View)</h3>
+          <AvatarGroup display="condensed">
+            <Avatar img="/images/endorser1.jpg" title="Labor Leader" />
+            <Avatar img="/images/endorser2.jpg" title="Community Organizer" />
+            <Avatar initials="ER" title="Environmental Activist" />
+            <Avatar initials="TH" title="Healthcare Worker" />
+            <Avatar initials="JS" title="Small Business Owner" />
+            <Avatar initials="KL" title="Teacher" />
+            <Avatar initials="RM" title="Housing Advocate" />
+            <Avatar initials="CN" title="Student Leader" />
+          </AvatarGroup>
+          <p class="endorser-note">Over 150 community members have endorsed our campaign</p>
+        </div>
+      </div>
     </section>
 
-    <section class="space-content">
-      <h2>Campaign Message</h2>
-      <Video 
-        title="Our Vision for Change" 
-        src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      />
-      <p class="text-sm text-gray-600 mt-2">Watch our campaign launch and learn about our vision for economic justice</p>
+    <!-- Video Examples -->
+    <section class="demo-section">
+      <h2>Video Content</h2>
+      <p>Campaign messages, testimonials, and community stories.</p>
+      
+      <div class="video-showcase">
+        <div class="video-demo">
+          <h3>Campaign Launch Message</h3>
+          <Video 
+            src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            title="Why I'm Running: A Message from Alex Rivera"
+            ratio="16:9"
+            loading="lazy"
+          />
+          <p class="video-description">Our candidate shares their vision for economic justice and community-centered governance.</p>
+        </div>
+        
+        <div class="video-demo">
+          <h3>Community Testimonial</h3>
+          <Video 
+            src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            title="Maria's Story: How Housing Policy Affects Real Families"
+            ratio="4:3"
+          />
+          <p class="video-description">Local resident Maria shares how current housing policies have impacted her family.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Elements -->
+    <section class="demo-section">
+      <h2>Interactive Elements</h2>
+      <p>Pagination for content lists and utility components.</p>
+      
+      <div class="interactive-showcase">
+        <div class="pagination-demo">
+          <h3>Content Pagination</h3>
+          <p>Navigate through large lists of stories, events, or blog posts:</p>
+          <Pagination
+            currentPage={3}
+            lastPage={8}
+            prevUrl="/stories?page=2"
+            nextUrl="/stories?page=4"
+          />
+        </div>
+        
+        <div class="utility-demo">
+          <h3>Utility Components</h3>
+          <p>Essential accessibility and user experience tools:</p>
+          <div class="utility-grid">
+            <div class="utility-item">
+              <h4>Skip Links</h4>
+              <p>Automatically added at page top for keyboard users</p>
+              <Badge type="success" size="sm">Auto-included</Badge>
+            </div>
+            <div class="utility-item">
+              <h4>Dark Mode Toggle</h4>
+              <p>System-aware theme switching (see top of page)</p>
+              <Badge type="info" size="sm">User Preference</Badge>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 
@@ -177,9 +510,181 @@ import {
       <button type="submit" class="button">Donate Now</button>
     </form>
   </Modal>
+
+  <Modal triggerId="text-alerts-modal" title="Enable Text Alerts">
+    <p>Get immediate notifications about urgent actions and campaign updates.</p>
+    <form>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input id="phone" type="tel" placeholder="(555) 123-4567" required />
+      </div>
+      <div class="form-group">
+        <label for="alert-types">Alert Types:</label>
+        <select id="alert-types" multiple>
+          <option value="urgent">Urgent Actions</option>
+          <option value="events">Event Reminders</option>
+          <option value="updates">Campaign Updates</option>
+          <option value="volunteer">Volunteer Opportunities</option>
+        </select>
+      </div>
+      <p><small>Standard messaging rates may apply. You can opt out anytime.</small></p>
+      <button type="submit" class="button">Enable Alerts</button>
+    </form>
+  </Modal>
+
+  <Modal triggerId="house-party-modal" title="Host a House Party">
+    <p>Connect with neighbors and introduce them to our campaign in your home.</p>
+    <form>
+      <div class="form-group">
+        <label for="host-name">Host Name:</label>
+        <input id="host-name" type="text" required />
+      </div>
+      <div class="form-group">
+        <label for="host-email">Email Address:</label>
+        <input id="host-email" type="email" required />
+      </div>
+      <div class="form-group">
+        <label for="party-date">Preferred Date:</label>
+        <input id="party-date" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="expected-guests">Expected Number of Guests:</label>
+        <select id="expected-guests">
+          <option value="5-10">5-10 people</option>
+          <option value="10-20">10-20 people</option>
+          <option value="20+">20+ people</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="party-notes">Special Considerations:</label>
+        <textarea id="party-notes" placeholder="Accessibility needs, dietary restrictions, etc."></textarea>
+      </div>
+      <button type="submit" class="button">Request House Party Kit</button>
+    </form>
+  </Modal>
 </DefaultLayout>
 
 <style lang="scss">
+  // Demo Layout
+  .demo-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--heading-color);
+    }
+    
+    p {
+      font-size: 1.25rem;
+      color: var(--text-color);
+      margin-bottom: 2rem;
+    }
+  }
+
+  .demo-section {
+    margin: 4rem 0;
+    padding: 2rem 0;
+    border-top: 2px solid var(--border-color);
+    
+    &:first-child {
+      border-top: none;
+    }
+    
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--heading-color);
+    }
+    
+    > p {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    
+    h3 {
+      font-size: 1.75rem;
+      margin: 2rem 0 1rem;
+      color: var(--heading-color);
+    }
+  }
+
+  // Notification Styles
+  .notification-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .notification-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color, #2563eb);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: var(--primary-color-dark, #1d4ed8);
+      transform: translateY(-1px);
+    }
+    
+    &:focus {
+      outline: 3px solid var(--primary-color, #2563eb);
+      outline-offset: 2px;
+    }
+  }
+
+  // Badge Showcase
+  .badge-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .badge-group {
+    padding: 1.5rem;
+    background: var(--background-alt);
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-color);
+    
+    h3 {
+      font-size: 1.25rem;
+      margin: 0 0 1rem;
+      color: var(--heading-color);
+    }
+    
+    :global(.badge) {
+      margin: 0.25rem 0.5rem 0.25rem 0;
+      display: inline-block;
+    }
+  }
+
+  // Card & Other Styles
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin: 1.5rem 0;
+  }
+
+  .card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  // Form Styles
   .form-group {
     margin-bottom: 1rem;
     
@@ -187,33 +692,29 @@ import {
       display: block;
       font-weight: 600;
       margin-bottom: 0.25rem;
+      color: var(--heading-color);
     }
     
-    input, select {
+    input, select, textarea {
       width: 100%;
-      padding: 0.5rem;
-      border: 1px solid var(--neutral-600);
-      border-radius: 0.25rem;
+      padding: 0.75rem;
+      border: 2px solid var(--border-color);
+      border-radius: 0.375rem;
       font-family: inherit;
+      font-size: 1rem;
+      background: var(--background);
+      color: var(--text-color);
+      transition: border-color 0.2s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color, #2563eb);
+        box-shadow: 0 0 0 3px var(--primary-color-alpha, rgba(37, 99, 235, 0.1));
+      }
     }
     
     select[multiple] {
-      height: 6rem;
-    }
-  }
-  
-  .grid {
-    display: grid;
-    gap: 1rem;
-    
-    &.grid-cols-1 {
-      grid-template-columns: 1fr;
-    }
-    
-    @media (min-width: 768px) {
-      &.md\:grid-cols-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      height: 120px;
     }
   }
 </style>

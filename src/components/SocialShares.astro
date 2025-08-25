@@ -25,13 +25,13 @@ const { url = Astro.url.href } = Astro.props
       rel="noopener noreferrer"
     >
       <span class="sr-only">Share on Facebook</span>
-      <Icon name="lucide:facebook" size={40} />
+      <Icon name="ph:facebook-logo" size={40} />
     </a>
   </li>
   <li class="animate-bouncing">
     <a href={`https://x.com/share?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer">
       <span class="sr-only">Share on Twitter</span>
-      <Icon name="lucide:twitter" size={40} />
+      <Icon name="ph:twitter-logo" size={40} />
     </a>
   </li>
   <li class="animate-bouncing">
@@ -41,7 +41,7 @@ const { url = Astro.url.href } = Astro.props
       rel="noopener noreferrer"
     >
       <span class="sr-only">Share on LinkedIn</span>
-      <Icon name="lucide:linkedin" size={40} />
+      <Icon name="ph:linkedin-logo" size={40} />
     </a>
   </li>
 </ul>

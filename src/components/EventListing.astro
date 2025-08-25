@@ -55,7 +55,7 @@ const isSameDay = endDate && startDate.toDateString() === endDate.toDateString()
     
     <div class="event-meta">
       <span class="event-time">
-        <Icon name="lucide:clock" />
+        <Icon name="ph:clock" />
         <time datetime={startDate.toISOString()}>
           {formatDate(startDate)}
         </time>
@@ -78,14 +78,14 @@ const isSameDay = endDate && startDate.toDateString() === endDate.toDateString()
       </span>
       
       <span class="event-location">
-        <Icon name={virtual ? "lucide:video" : "lucide:map-pin"} />
+        <Icon name={virtual ? "ph:video-camera" : "ph:map-pin"} />
         {location}
         {virtual && <span class="badge-virtual">Virtual</span>}
       </span>
       
       {capacity && (
         <span class="event-capacity">
-          <Icon name="lucide:users" />
+          <Icon name="ph:users" />
           {spotsRemaining !== undefined 
             ? `${spotsRemaining} spots remaining`
             : `${capacity} capacity`
@@ -99,7 +99,7 @@ const isSameDay = endDate && startDate.toDateString() === endDate.toDateString()
     {registrationUrl && (
       <a href={registrationUrl} class="btn-register" aria-label={`Register for ${title}`}>
         Register
-        <Icon name="lucide:arrow-right" />
+        <Icon name="ph:arrow-right" />
       </a>
     )}
   </div>

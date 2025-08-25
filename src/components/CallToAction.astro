@@ -14,7 +14,7 @@ interface Props {
   title?: string
   /**
    * The URL the button should link to
-   * @default "https://github.com/incluud/accessible-astro-starter"
+   * @default "https://github.com/barrettsoron/movement-starter-template"
    */
   link?: string
   /**
@@ -25,9 +25,9 @@ interface Props {
 }
 
 const {
-  title = 'Get this theme on GitHub',
-  link = 'https://github.com/incluud/accessible-astro-starter',
-  linkText = 'Use this theme',
+  title = 'Get the Movement Starter Template',
+  link = 'https://github.com/barrettsoron/movement-starter-template',
+  linkText = 'Build Your Movement Site',
 } = Astro.props
 ---
 
@@ -36,7 +36,7 @@ const {
     <h2 class="text-center text-3xl md:text-6xl">{title}</h2>
     <a href={link} class="text-center text-2xl">
       {linkText}
-      <Icon name="lucide:arrow-right" />
+      <Icon name="ph:arrow-right" />
     </a>
   </div>
 </div>

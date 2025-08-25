@@ -14,7 +14,7 @@ interface Props {
   src?: string
 }
 
-const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
+const { src = 'https://images.unsplash.com/photo-1517488629431-6427e0ee1e5f?w=800&fit=crop&crop=faces' }: Props = Astro.props
 ---
 
 <section class="hero my-24">
@@ -22,16 +22,16 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
     <div class="grid grid-cols-1 items-center gap-24 lg:grid-cols-2">
       <div class="flex flex-col items-center gap-8 md:items-start">
         <h1 class="text-center text-6xl md:text-left lg:text-8xl">
-          <slot><span class="text-gradient">Accessible</span> Starter for Astro</slot>
+          <slot>Build <span class="text-gradient">Powerful</span> Movement Websites</slot>
         </h1>
         <div class="flex flex-col gap-3 min-[500px]:flex-row">
-          <a class="button has-icon" href="https://github.com/incluud/accessible-astro-starter">
-            <Icon name="lucide:star" />
+          <a class="button has-icon" href="https://github.com/barrettsoron/movement-starter-template">
+            <Icon name="ph:star" />
             Star on GitHub
           </a>
-          <a class="button has-icon color-secondary" href="https://accessible-astro.incluud.dev/">
-            <Icon name="lucide:bookmark" />
-            Read the docs
+          <a class="button has-icon color-secondary" href="/components-demo">
+            <Icon name="ph:rocket-launch" />
+            Get Started
           </a>
         </div>
       </div>

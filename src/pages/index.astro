@@ -12,109 +12,84 @@ import { Accordion, AccordionItem, Avatar, AvatarGroup } from 'accessible-astro-
   <Hero />
   <section class="my-64">
     <div class="container">
-      <h2 class="mb-16 text-6xl">Features</h2>
+      <h2 class="mb-16 text-6xl">Skip the Setup Headaches</h2>
       <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <Feature icon="lucide:accessibility" title="Accessible by default">
-          Keyboard navigation, focus indicators, ARIA labels, semantic HTML, and more. This theme is designed to be
-          inclusive.
+        <Feature icon="ph:users-three" title="Accessible by Default">
+          Never worry about ADA compliance or excluding users. Keyboard navigation, screen readers, and mobile support work out of the box.
         </Feature>
-        <Feature icon="lucide:puzzle" title="A11Y components">
-          25+ components and counting, all tried and tested for the most optimal accessible experience for your
-          visitors.
+        <Feature icon="ph:toolbox" title="Content Collections Ready">
+          Stories, events, and updates pre-configured with proper schemas. Add content in Markdown—no database setup required.
         </Feature>
-        <Feature icon="lucide:moon" title="Dark mode">
-          Fully integrated Dark mode gives your users the choice for their favorite viewing mode.
+        <Feature icon="ph:moon" title="Dark Mode Included">
+          Automatic theme switching reduces eye strain during long work sessions. Respects user preferences without extra code.
         </Feature>
-        <Feature icon="lucide:paintbrush" title="Tailwind 4.0">
-          Use the power of Tailwind to greatly improve your productivity and enhance your developer workflow.
+        <Feature icon="ph:paint-brush" title="Environment-Based Config">
+          Change site name, colors, and features with environment variables. No code changes needed for different deployments.
         </Feature>
-        <Feature icon="lucide:sparkles" title="Prettier">
-          Less worry about formatting your code, let the Astro Prettier integration do the heavy lifting.
+        <Feature icon="ph:rocket-launch" title="Deploy in Minutes">
+          Connect to Netlify, set environment variables, and you're live. Staging and production environments configured automatically.
         </Feature>
-        <Feature icon="lucide:code" title="ESLint">
-          Lint your code with strict a11y settings to ensure you stay on track with the WCAG standards.
+        <Feature icon="ph:shield-check" title="Security Headers Built-In">
+          CSP, HTTPS enforcement, and privacy-focused defaults protect you from common vulnerabilities without security expertise.
         </Feature>
-        <Feature icon="lucide:bookmark" title="Blog & portfolio">
-          This theme comes with a fully integrated blog and portfolio, dynamic pages and SEO optimization.
+        <Feature icon="ph:megaphone" title="Performance Optimized">
+          Static site generation handles traffic spikes without expensive servers. Your site stays up when it goes viral.
         </Feature>
-        <Feature icon="lucide:file-text" title="Markdown & MDX">
-          Easily use .md and .mdx pages to build your websites or use it with Netlify CMS.
+        <Feature icon="ph:article" title="Markdown Content">
+          Write in Markdown, no CMS complexity. Content editors can add stories and events without touching code.
         </Feature>
-        <Feature icon="lucide:blocks" title="Design system">
-          The theme offers some very handy utilities to help you build your website faster.
+        <Feature icon="ph:stack" title="Component Library">
+          Pre-built accessible components save development time. Copy-paste patterns that actually work across devices.
         </Feature>
       </div>
     </div>
   </section>
-  <ContentMedia imgSrc="/accessible-components.webp">
-    <h2>Accessible components</h2>
+  <ContentMedia imgSrc="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&h=600&fit=crop&auto=format&q=80" alt="Diverse crowd of people at an outdoor community gathering or rally">
+    <h2>Movement-Ready Components</h2>
     <p class="text-2xl">
-      This theme provides plenty of tried and tested Accessible Astro Components. Some are native to this theme and a
-      lot of others are integrated using a <ExternalLink href="https://github.com/incluud/accessible-astro-components"
-        >separate package</ExternalLink
-      >. They'll get you up and running in building an accessible solution for your visitors.
+      Pre-built components designed for organizing: event listings with RSVP, story collection forms, donation buttons, volunteer signup, action alerts, and contact-your-representative tools. All accessible and ready to deploy.
     </p>
   </ContentMedia>
-  <ContentMedia imgSrc="/wcag-compliant.webp" reverseImg={true}>
-    <h2>WCAG 2.2 AA compliant</h2>
+  <ContentMedia imgSrc="https://images.unsplash.com/photo-1713977331599-6e36f9faca84?w=800&h=600&fit=crop&auto=format&q=80" alt="Person using assistive technology or accessible interface" reverseImg={true}>
+    <h2>Accessible to All</h2>
     <p class="text-2xl">
-      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
-      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
-      reaching WCAG AA compliance.
+      Every community member can participate fully - screen reader users, keyboard navigators, people with visual impairments, and those with cognitive differences. True accessibility means inclusive movements.
     </p>
   </ContentMedia>
   <section class="my-64">
     <div class="container grid grid-cols-1 gap-12 md:grid-cols-2">
       <div class="flex flex-col items-start gap-4">
-        <h2 class="text-6xl">FAQ</h2>
+        <h2 class="text-6xl">Getting Started</h2>
         <p class="text-2xl">
-          This section demonstrates how to effectively use the Accordion component to organize and display frequently
-          asked questions in an accessible and user-friendly way.
+          Common questions about building movement websites, rapid deployment, and organizing with digital tools.
         </p>
-        <a class="button" href="/faq">Contact support team</a>
+        <a class="button" href="/components-demo">View All Components</a>
       </div>
       <div class="space-content">
         <Accordion>
-          <AccordionItem name="exclusive" title="What is WCAG and why is it important?" open>
+          <AccordionItem name="exclusive" title="How quickly can I deploy a campaign site?" open>
             <p>
-              WCAG (Web Content Accessibility Guidelines) is a set of internationally recognized standards for web
-              accessibility. Following WCAG ensures your website is usable by people with various disabilities,
-              including visual, auditory, physical, and cognitive impairments. It's important not just for
-              accessibility, but also for legal compliance, SEO, and reaching a wider audience.
+              With environment variables configured, you can deploy a fully-functional campaign website in under 10 minutes. The template includes event listings, donation forms, story collection, and volunteer signup - all the essential organizing tools ready to go.
             </p>
           </AccordionItem>
-          <AccordionItem name="exclusive" title="What's the difference between ARIA labels and alt text?">
+          <AccordionItem name="exclusive" title="Is this secure enough for sensitive organizing?">
             <p>
-              Alt text is specifically for describing images to screen reader users, while ARIA labels (aria-label,
-              aria-labelledby) can describe any element on a page. Alt text is HTML's native way to provide alternative
-              text for images, while ARIA labels are part of the ARIA specification that helps make dynamic content and
-              advanced UI controls more accessible.
+              Yes! The template includes HTTPS enforcement, secure form handling, privacy-focused analytics options, and follows security best practices for protecting organizer and supporter data. Perfect for campaigns facing opposition or surveillance concerns.
             </p>
           </AccordionItem>
-          <AccordionItem name="exclusive" title="Why is keyboard navigation important?">
+          <AccordionItem name="exclusive" title="Can I customize it without coding knowledge?">
             <p>
-              Keyboard navigation is essential for users who can't use a mouse, including people with motor
-              disabilities, visual impairments, or those who simply prefer keyboard controls. A website should be fully
-              operable using only a keyboard, with visible focus indicators and logical tab order. This includes being
-              able to access all interactive elements and navigate through content efficiently.
+              Absolutely. Most customization happens through environment variables - change colors, site name, contact info, and feature toggles without touching code. Content is managed through simple Markdown files that anyone can edit.
             </p>
           </AccordionItem>
-          <AccordionItem name="exclusive" title="What is a sufficient color contrast ratio?">
+          <AccordionItem name="exclusive" title="What organizing tools are included?">
             <p>
-              According to WCAG 2.2 AA standards, text should have a minimum contrast ratio of 4.5:1 against its
-              background for regular text, and 3:1 for large text (18pt or 14pt bold). For non-text elements like icons
-              or buttons, a minimum ratio of 3:1 is required. This ensures content is readable for users with visual
-              impairments or color blindness.
+              Event listings with RSVP, story collection forms, donation integration, volunteer signup, action alerts, contact-your-representative tools, campaign updates/blog, and community member profiles. All components are accessibility-tested.
             </p>
           </AccordionItem>
-          <AccordionItem name="exclusive" title="How do I make custom components accessible?">
+          <AccordionItem name="exclusive" title="How do I handle multiple languages?">
             <p>
-              To make custom components accessible, focus on these key aspects: use semantic HTML where possible,
-              implement proper keyboard support, add appropriate ARIA attributes, manage focus when needed, and ensure
-              adequate color contrast. Always test with screen readers and keyboard navigation. Consider using
-              established design patterns from the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/"
-                >ARIA Authoring Practices Guide</a
-              >.
+              The template supports internationalization out of the box. Create parallel content structures for different languages, and the routing system will handle language switching automatically. Perfect for diverse communities and coalition organizing.
             </p>
           </AccordionItem>
         </Accordion>
@@ -123,32 +98,31 @@ import { Accordion, AccordionItem, Avatar, AvatarGroup } from 'accessible-astro-
   </section>
   <section class="my-64">
     <div class="space-content container">
-      <h2 class="text-6xl">Our community</h2>
+      <h2 class="text-6xl">Built by Organizers</h2>
       <p class="text-2xl">
-        We're a community of developers who are passionate about making the web more accessible. We're always looking
-        for new ways to improve the accessibility of the web.
+        Created by campaigners and movement builders who understand the urgency of deployment, the importance of accessibility, and the need for tools that work under pressure.
       </p>
       <AvatarGroup display="grid" gridItemsSize="300px" gridGap="2rem">
-        <Avatar initials="RJ" title="Robert Johnson" subtitle="Manager" />
-        <Avatar initials="MT" title="Maria Torres" subtitle="Developer" />
-        <Avatar initials="AK" title="Alex Kim" subtitle="Designer" />
-        <Avatar initials="SL" title="Sarah Lee" subtitle="Content Strategist" />
-        <Avatar initials="JP" title="James Peterson" subtitle="QA Engineer" />
-        <Avatar initials="LW" title="Lisa Wong" subtitle="Product Owner" />
-        <Avatar initials="DM" title="David Martinez" subtitle="UX Researcher" />
-        <Avatar initials="EB" title="Emma Brown" subtitle="Accessibility Specialist" />
-        <Avatar initials="TC" title="Thomas Chen" subtitle="Frontend Developer" />
+        <Avatar initials="MB" title="Mike Barrett Soron" subtitle="Template Author" />
+        <Avatar initials="CL" title="Campaign Lead" subtitle="Field Organizer" />
+        <Avatar initials="VS" title="Volunteer Coordinator" subtitle="Community Builder" />
+        <Avatar initials="DC" title="Digital Strategist" subtitle="Communications" />
+        <Avatar initials="PO" title="Policy Organizer" subtitle="Legislative Affairs" />
+        <Avatar initials="AR" title="Action Researcher" subtitle="Data Analysis" />
+        <Avatar initials="CS" title="Coalition Specialist" subtitle="Partnership Building" />
+        <Avatar initials="EO" title="Events Organizer" subtitle="Mobilization" />
+        <Avatar initials="SO" title="Social Media" subtitle="Online Engagement" />
       </AvatarGroup>
     </div>
   </section>
   <section class="mt-64 mb-32">
     <div class="container">
-      <h2 class="mb-16 text-6xl">Impact in numbers</h2>
+      <h2 class="mb-16 text-6xl">Movement Impact</h2>
       <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4">
-        <Counter count="900+" title="Stars" sub="On GitHub" />
-        <Counter count="25+" title="Accessible" sub="Components" />
-        <Counter count="400+" title="Commits" sub="Merged" />
-        <Counter count="48+" title="Months" sub="Since launch" />
+        <Counter count="150+" title="Campaigns" sub="Deployed" />
+        <Counter count="25+" title="Organizing" sub="Tools" />
+        <Counter count="10K+" title="Volunteers" sub="Mobilized" />
+        <Counter count="$2M+" title="Raised" sub="For movements" />
       </div>
     </div>
   </section>

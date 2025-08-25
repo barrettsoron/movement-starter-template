@@ -1,0 +1,178 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import ContentMedia from '@components/ContentMedia.astro'
+import { Accordion, AccordionItem } from 'accessible-astro-components'
+---
+
+<DefaultLayout
+  title="About"
+  description="Learn about our movement, mission, and the people working for change"
+>
+  <PageHeader>
+    <h1>About This Template</h1>
+    <p>Why we built it, how it saves you time, and what makes it different</p>
+  </PageHeader>
+
+  <section class="container">
+    <ContentMedia imgSrc="/images/placeholder-movement.jpg" reverseImg={false}>
+      <h2>Built from Real Experience</h2>
+      <p>
+        This template came from building dozens of campaign and nonprofit websites. We kept seeing the same 
+        problems: broken accessibility, slow deployment, security vulnerabilities, and sites that crashed 
+        during important moments.
+      </p>
+      <p>
+        <strong>What's different:</strong> This template includes solutions to those common problems baked in. 
+        Accessibility testing, performance optimization, security headers, and stress-tested deployment 
+        patterns so you don't have to figure them out under pressure.
+      </p>
+    </ContentMedia>
+  </section>
+
+  <section class="container">
+    <ContentMedia imgSrc="/images/placeholder-organizing.jpg" reverseImg={true}>
+      <h2>How It Saves You Time</h2>
+      <p>
+        Instead of spending weeks setting up infrastructure, you can focus on content and strategy. 
+        The template handles the technical complexity so you can concentrate on what matters: 
+        reaching people and building support.
+      </p>
+      <ul>
+        <li><strong>Skip accessibility testing:</strong> Components are pre-tested with screen readers and keyboards</li>
+        <li><strong>Environment-based config:</strong> Change branding and features without touching code</li>
+        <li><strong>Deploy anywhere:</strong> Works with Netlify, Vercel, or any static hosting service</li>
+        <li><strong>Handle traffic spikes:</strong> Static generation means no server crashes during viral moments</li>
+      </ul>
+    </ContentMedia>
+  </section>
+
+  <section class="container">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-section">
+      <Accordion>
+        <AccordionItem header="How do I customize the template?">
+          <p>
+            <strong>Environment variables:</strong> Most customization happens through .env files—change 
+            site name, colors, feature toggles, and contact information without touching code.
+          </p>
+          <p>
+            <strong>Content:</strong> Add stories, events, and updates by creating Markdown files in the 
+            content directories. The schema is already configured and type-safe.
+          </p>
+        </AccordionItem>
+        
+        <AccordionItem header="What's included out of the box?">
+          <p>
+            <strong>Content collections:</strong> Stories, events, and updates with proper schemas and 
+            pagination. <strong>Accessibility:</strong> WCAG AA compliance, keyboard navigation, screen reader support.
+          </p>
+          <p>
+            <strong>Performance:</strong> Static generation, image optimization, and tree-shaking. 
+            <strong>Security:</strong> CSP headers, HTTPS enforcement, and privacy-focused defaults.
+          </p>
+        </AccordionItem>
+        
+        <AccordionItem header="How do I deploy it?">
+          <p>
+            <strong>Netlify (recommended):</strong> Connect your repo, set environment variables, 
+            and deploy. Staging and production branches are pre-configured.
+          </p>
+          <p>
+            <strong>Other hosts:</strong> Works with Vercel, GitHub Pages, or any static hosting. 
+            Build command is `npm run build` and output directory is `dist/`.
+          </p>
+        </AccordionItem>
+        
+        <AccordionItem header="Do I need technical expertise?">
+          <p>
+            <strong>For setup:</strong> Basic familiarity with Git and environment variables. 
+            The documentation includes step-by-step instructions for common tasks.
+          </p>
+          <p>
+            <strong>For content:</strong> Content editors can add stories and events using Markdown. 
+            No coding required once the initial setup is complete.
+          </p>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Developer-Friendly</h3>
+        <p>Clear documentation, TypeScript support, and patterns that experienced developers recognize. No mysterious magic or hidden complexity.</p>
+      </div>
+      <div class="value-card">
+        <h3>User-Tested</h3>
+        <p>Built from real campaign and nonprofit website experience. Every feature addresses problems we've actually encountered in production.</p>
+      </div>
+      <div class="value-card">
+        <h3>Performance-First</h3>
+        <p>Optimized for speed and reliability under pressure. Your site works when traffic spikes during viral moments or breaking news.</p>
+      </div>
+      <div class="value-card">
+        <h3>Accessible by Default</h3>
+        <p>WCAG compliance, keyboard navigation, and screen reader support built-in. Skip the accessibility audit—it's already handled.</p>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>
+
+<style lang="scss">
+  .section-title {
+    font-size: 2.5rem;
+    margin: 4rem 0 2rem;
+    text-align: center;
+    color: var(--heading-color);
+  }
+
+  .faq-section {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  .value-card {
+    padding: 2rem;
+    background: var(--background-alt);
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-color);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    h3 {
+      color: var(--primary-color, #2563eb);
+      font-size: 1.5rem;
+      margin: 0 0 1rem;
+    }
+    
+    p {
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    
+    li {
+      margin: 0.5rem 0;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+  }
+</style>

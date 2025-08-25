@@ -1,17 +1,17 @@
 # Movement Starter Template
 
-> A rapidly-deployable, accessibility-first website template for progressive movements and campaigns. Built on [Accessible Astro Starter](https://github.com/incluud/accessible-astro-starter) by [Incluud](https://incluud.dev/).
+> **Skip the setup headaches.** A website template that works out of the box for campaigns, nonprofits, and advocacy organizations. Built on [Accessible Astro Starter](https://github.com/incluud/accessible-astro-starter) with real-world organizing needs in mind.
 
-## Features
+## What You Get
 
-- 🌐 **Accessibility-first** - WCAG compliant with skip links, semantic HTML, and keyboard navigation
-- ⚡ **Rapid deployment** - Configure via environment variables and deploy in minutes
-- 📱 **Fully responsive** - Mobile-first design that works on all devices
-- 🎨 **Dark mode** - Automatic theme switching with user preference detection
-- 📝 **Content collections** - Stories, Events, and Updates ready to use
-- 🔒 **Security headers** - Privacy-focused CSP and security best practices
-- 🚀 **Performance optimized** - Static site generation with Astro
-- 🌍 **Multi-environment** - Production, staging, and preview deployments
+- 🌐 **Works for everyone** - Accessible by default (never get sued, never exclude supporters)
+- ⚡ **Live in minutes** - Configure with environment variables, deploy instantly
+- 📱 **Mobile-first** - Perfect on phones, tablets, laptops—wherever your supporters are
+- 🎨 **Dark mode** - Easy on tired eyes during late-night campaign work
+- 📝 **Content ready** - Stories, Events, and Updates collections pre-configured
+- 🔒 **Secure by default** - Privacy-focused headers protect your organization and supporters
+- 🚀 **Fast loading** - Static generation means your site handles traffic spikes
+- 🌍 **Testing environments** - Production, staging, and preview deployments built-in
 
 ## Quick Start
 
@@ -187,6 +187,17 @@ When using this template for a new project, follow these steps:
 - [ ] Update this README with your project information
 - [ ] Remove or update example content
 - [ ] Test all features in staging before production
+
+## Documentation
+
+Training materials and guides for developers and content editors:
+
+- **[Understanding Component APIs](docs/understanding-component-apis.md)** - Comprehensive guide to working with component interfaces, perfect for junior developers joining movement tech teams
+- **[Why Accessibility Helps YOU](docs/why-accessibility-helps-you.md)** - Personal benefits of accessibility through self-interest and solidarity—understand why accessible design protects your future self
+- **[Components Guide](docs/components-guide.md)** - Reference for using accessible components in campaign and organizing sites
+- **[Accessible Astro Starter Reference](docs/accessible-astro-starter-reference.md)** - Original template documentation
+
+These guides focus on practical skills that make you more effective: faster development, fewer bugs, sites that work under pressure, and patterns that prevent embarrassing failures. Learn once, apply everywhere.
 
 ## Customization
 

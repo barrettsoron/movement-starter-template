@@ -24,16 +24,16 @@ const mainNavItems = siteConfig.navigation.main.filter(item =>
       </li>
     ))}
     <li class="menu-item type-icon animate-rotate">
-      <a href="https://github.com/incluud/accessible-astro-starter">
-        <Icon name="lucide:github" />
+      <a href="https://github.com/barrettsoron/movement-starter-template">
+        <Icon name="ph:github-logo" />
         <span class="sr-only">Go to the GitHub page</span>
       </a>
     </li>
     {siteConfig.features.darkMode && (
       <li class="menu-item type-icon animate-rotate">
         <DarkMode>
-          <Icon name="lucide:moon" slot="light" />
-          <Icon name="lucide:sun" slot="dark" />
+          <Icon name="ph:moon" slot="light" />
+          <Icon name="ph:sun" slot="dark" />
         </DarkMode>
       </li>
     )}
