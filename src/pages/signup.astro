@@ -1,0 +1,170 @@
+---
+// Generic signup page demonstrating SignupForm usage
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import SignupForm from '@components/forms/SignupForm.astro'
+import { siteConfig } from '@/site.config'
+
+const seo = {
+  title: `Join Us - ${siteConfig.name}`,
+  description: `Join ${siteConfig.name} and be part of our movement for positive change. Add your name to our community of activists and organizers.`,
+}
+---
+
+<DefaultLayout {seo}>
+  <section class="my-32">
+    <div class="container">
+      <div class="space-content text-center">
+        <h1>Join Our Movement</h1>
+        <p class="lead">
+          Be part of something bigger. Join our community of people working together for positive change.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="my-16">
+    <div class="container">
+      <div class="form-container">
+        <SignupForm 
+          title="Add Your Name"
+          subtitle="Join thousands of others building power for change"
+          requiredFields={['email']}
+          optionalFields={['name', 'phone', 'postal_code']}
+        />
+      </div>
+    </div>
+  </section>
+  
+  <section class="my-32">
+    <div class="container">
+      <div class="space-content text-center">
+        <h2>Why Join Us?</h2>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="benefit-icon" aria-hidden="true">📢</div>
+            <h3>Stay Informed</h3>
+            <p>Get updates on actions, events, and opportunities to make a difference in your community.</p>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon" aria-hidden="true">🤝</div>
+            <h3>Take Action</h3>
+            <p>Be the first to know about campaigns and ways to get involved in creating positive change.</p>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon" aria-hidden="true">🌟</div>
+            <h3>Build Community</h3>
+            <p>Connect with like-minded people in your area who share your values and commitment to progress.</p>
+          </div>
+        </div>
+        
+        {siteConfig.features.volunteer && (
+          <div class="next-level">
+            <h3>Ready to Do More?</h3>
+            <p>If you're interested in volunteering your time and skills, we'd love to have you on our team.</p>
+            <a href="/volunteer" class="button primary">
+              Explore Volunteer Opportunities
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</DefaultLayout>
+
+<style lang="scss">
+  .lead {
+    font-size: 1.25rem;
+    color: var(--color-neutral-600, #4b5563);
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--color-neutral-25, #fefefe);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+  
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .benefit-item {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    border-top: 4px solid var(--color-primary-500, #3b82f6);
+    
+    .benefit-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    h3 {
+      color: var(--color-primary-700, #1d4ed8);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    p {
+      color: var(--color-neutral-600, #4b5563);
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+  
+  .next-level {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--color-primary-50, #eff6ff);
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-primary-200, #bfdbfe);
+    
+    h3 {
+      color: var(--color-primary-800, #1e40af);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    p {
+      color: var(--color-primary-700, #1d4ed8);
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    
+    &.primary {
+      background: var(--color-primary-600, #2563eb);
+      color: white;
+      border: 2px solid var(--color-primary-600, #2563eb);
+      
+      &:hover {
+        background: var(--color-primary-700, #1d4ed8);
+        border-color: var(--color-primary-700, #1d4ed8);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      }
+    }
+  }
+</style>

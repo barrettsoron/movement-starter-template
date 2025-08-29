@@ -25,6 +25,9 @@ export const siteConfig = {
     darkMode: import.meta.env.PUBLIC_FEATURE_DARKMODE !== 'false',
     newsletter: import.meta.env.PUBLIC_FEATURE_NEWSLETTER !== 'false',
     donations: import.meta.env.PUBLIC_FEATURE_DONATIONS !== 'false',
+    forms: import.meta.env.PUBLIC_FEATURE_FORMS !== 'false',
+    signup: import.meta.env.PUBLIC_FEATURE_SIGNUP !== 'false',
+    volunteer: import.meta.env.PUBLIC_FEATURE_VOLUNTEER !== 'false',
   },
   
   // Campaign/Movement specific
@@ -32,6 +35,35 @@ export const siteConfig = {
     primaryAction: import.meta.env.PUBLIC_PRIMARY_ACTION || 'Take Action', // TEMPLATE: Your main CTA text
     primaryActionUrl: import.meta.env.PUBLIC_PRIMARY_ACTION_URL || '/action', // TEMPLATE: Your main CTA link
     donateUrl: import.meta.env.PUBLIC_DONATE_URL || '/donate', // TEMPLATE: Your donation page URL
+  },
+  
+  // Forms configuration
+  forms: {
+    // TEMPLATE: Configure your form endpoints and settings
+    endpoints: {
+      signup: import.meta.env.PUBLIC_FORMS_SIGNUP_ENDPOINT || '/api/forms/signup',
+      volunteer: import.meta.env.PUBLIC_FORMS_VOLUNTEER_ENDPOINT || '/api/forms/volunteer',
+      newsletter: import.meta.env.PUBLIC_FORMS_NEWSLETTER_ENDPOINT || '/api/forms/newsletter',
+    },
+    cache: {
+      enabled: import.meta.env.PUBLIC_FORMS_CACHE !== 'false',
+      ttlMs: parseInt(import.meta.env.PUBLIC_FORMS_CACHE_TTL) || 60 * 60 * 1000, // 1 hour default
+      storageKey: import.meta.env.PUBLIC_FORMS_CACHE_KEY || 'movement_form_cache',
+    },
+    validation: {
+      enableClientSide: import.meta.env.PUBLIC_FORMS_CLIENT_VALIDATION !== 'false',
+      enableServerSide: import.meta.env.PUBLIC_FORMS_SERVER_VALIDATION !== 'false',
+    },
+    security: {
+      enableCSRF: import.meta.env.PUBLIC_FORMS_CSRF !== 'false',
+      enableRateLimit: import.meta.env.PUBLIC_FORMS_RATE_LIMIT !== 'false',
+      rateLimitPerMinute: parseInt(import.meta.env.PUBLIC_FORMS_RATE_LIMIT_PER_MINUTE) || 5,
+    },
+    // TEMPLATE: Customize success/error pages
+    redirects: {
+      successPage: import.meta.env.PUBLIC_FORMS_SUCCESS_PAGE || '/thanks',
+      errorPage: import.meta.env.PUBLIC_FORMS_ERROR_PAGE || '/error',
+    },
   },
   
   // Navigation structure
@@ -43,6 +75,8 @@ export const siteConfig = {
       { label: 'Events', href: '/events', show: 'features.events' },
       { label: 'Updates', href: '/updates', show: 'features.updates' },
       { label: 'Take Action', href: '/action', show: true, highlight: true },
+      { label: 'Join Us', href: '/signup', show: 'features.signup' },
+      { label: 'Volunteer', href: '/volunteer', show: 'features.volunteer' },
     ],
     footer: [
       { label: 'Privacy Policy', href: '/privacy' },

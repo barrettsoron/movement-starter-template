@@ -1,0 +1,262 @@
+---
+// Generic success page for form submissions
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import { Card } from 'accessible-astro-components'
+import { siteConfig } from '@/site.config'
+
+// Get form type from query parameters to customize message
+const url = new URL(Astro.request.url)
+const formType = url.searchParams.get('type') || 'signup'
+
+const messages = {
+  signup: {
+    title: 'Welcome to Our Movement!',
+    message: 'Thank you for joining our community. Together, we can create positive change.',
+    nextSteps: [
+      { title: 'Check Your Email', description: 'You should receive a confirmation email with next steps shortly.' },
+      { title: 'Follow Us', description: 'Stay connected on social media for the latest updates and actions.' },
+      { title: 'Spread the Word', description: 'Share our mission with friends and family who care about change.' }
+    ]
+  },
+  volunteer: {
+    title: 'Thank You for Volunteering!',
+    message: 'We\'re excited to have you join our volunteer team. Your skills and passion will make a real difference.',
+    nextSteps: [
+      { title: 'We\'ll Be in Touch', description: 'Our volunteer coordinator will contact you within 1-2 business days.' },
+      { title: 'Orientation Session', description: 'You\'ll be invited to our next volunteer orientation to get started.' },
+      { title: 'Find Your Team', description: 'We\'ll match you with volunteer opportunities that fit your interests and availability.' }
+    ]
+  },
+  newsletter: {
+    title: 'You\'re Subscribed!',
+    message: 'Thank you for subscribing to our newsletter. Stay informed about our latest campaigns and actions.',
+    nextSteps: [
+      { title: 'Confirm Your Email', description: 'Check your inbox for a confirmation email to complete your subscription.' },
+      { title: 'Weekly Updates', description: 'You\'ll receive our newsletter every week with campaign updates and action opportunities.' },
+      { title: 'Take Action', description: 'Watch for action alerts and opportunities to make your voice heard.' }
+    ]
+  }
+}
+
+const content = messages[formType] || messages.signup
+
+const seo = {
+  title: `Thank You - ${siteConfig.name}`,
+  description: content.message,
+}
+---
+
+<DefaultLayout {seo}>
+  <section class="my-64">
+    <div class="container">
+      <div class="space-content text-center">
+        <Card>
+          <div class="success-content">
+            <div class="success-icon" aria-hidden="true">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            
+            <h1>{content.title}</h1>
+            
+            <p class="lead">{content.message}</p>
+            
+            <div class="next-steps">
+              <h2>What happens next?</h2>
+              <ul class="steps-list">
+                {content.nextSteps.map((step) => (
+                  <li>
+                    <strong>{step.title}:</strong> {step.description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div class="action-links">
+              <a href="/" class="button primary">
+                Return to Homepage
+              </a>
+              
+              {siteConfig.features.volunteer && formType === 'signup' && (
+                <a href="/volunteer" class="button secondary">
+                  Volunteer With Us
+                </a>
+              )}
+              
+              {siteConfig.features.signup && formType === 'volunteer' && (
+                <a href="/signup" class="button secondary">
+                  Share With Friends
+                </a>
+              )}
+              
+              {siteConfig.twitter && (
+                <a 
+                  href={`https://twitter.com/${siteConfig.twitter}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="button outline"
+                >
+                  Follow on Twitter
+                </a>
+              )}
+            </div>
+            
+            <div class="contact-info">
+              <p>
+                Questions? Contact us at <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>
+
+<style lang="scss">
+  .success-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .success-icon {
+    color: var(--color-success-600, #059669);
+    margin-bottom: 1.5rem;
+    
+    svg {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+  
+  h1 {
+    color: var(--color-primary-900, #1f2937);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .lead {
+    font-size: 1.125rem;
+    color: var(--color-neutral-700, #374151);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .next-steps {
+    text-align: left;
+    margin-bottom: 2rem;
+    background: var(--color-neutral-50, #f9fafb);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-primary-900, #1f2937);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  }
+  
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--color-neutral-200, #e5e7eb);
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      strong {
+        color: var(--color-primary-700, #1d4ed8);
+        font-weight: 600;
+      }
+    }
+  }
+  
+  .action-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    
+    @media (min-width: 640px) {
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+  
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    font-size: 0.875rem;
+    
+    &.primary {
+      background: var(--color-primary-600, #2563eb);
+      color: white;
+      border-color: var(--color-primary-600, #2563eb);
+      
+      &:hover {
+        background: var(--color-primary-700, #1d4ed8);
+        border-color: var(--color-primary-700, #1d4ed8);
+        transform: translateY(-1px);
+      }
+    }
+    
+    &.secondary {
+      background: var(--color-neutral-600, #4b5563);
+      color: white;
+      border-color: var(--color-neutral-600, #4b5563);
+      
+      &:hover {
+        background: var(--color-neutral-700, #374151);
+        border-color: var(--color-neutral-700, #374151);
+        transform: translateY(-1px);
+      }
+    }
+    
+    &.outline {
+      border-color: var(--color-primary-600, #2563eb);
+      color: var(--color-primary-600, #2563eb);
+      background: transparent;
+      
+      &:hover {
+        background: var(--color-primary-600, #2563eb);
+        color: white;
+      }
+    }
+  }
+  
+  .contact-info {
+    font-size: 0.875rem;
+    color: var(--color-neutral-600, #4b5563);
+    
+    a {
+      color: var(--color-primary-600, #2563eb);
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+</style>

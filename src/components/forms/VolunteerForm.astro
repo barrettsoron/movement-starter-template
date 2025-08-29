@@ -1,0 +1,644 @@
+---
+// Generic volunteer form component for movement organizing
+import FormBase from './FormBase.astro'
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'div'> {
+  // Content customization
+  title?: string
+  subtitle?: string
+  
+  // Form behavior
+  endpoint?: string
+  successUrl?: string
+  errorUrl?: string
+  language?: string
+  showProgress?: boolean
+  
+  // Field configuration
+  requiredFields?: string[]
+  optionalFields?: string[]
+  
+  // Custom questions
+  customQuestions?: Array<{
+    id: string
+    label: string
+    type: 'text' | 'select' | 'checkbox' | 'textarea'
+    options?: string[]
+    required?: boolean
+  }>
+  
+  // Styling
+  variant?: 'default' | 'compact'
+  className?: string
+}
+
+const {
+  // Content
+  title = 'Volunteer With Us',
+  subtitle = 'Join our team and help build the movement for change.',
+  
+  // Form config
+  endpoint,
+  successUrl,
+  errorUrl,
+  language = 'en',
+  showProgress = true,
+  
+  // Fields
+  requiredFields = ['first_name', 'last_name', 'email', 'phone'],
+  optionalFields = ['address_1', 'address_2', 'postal_code', 'availability', 'skills', 'languages'],
+  
+  // Custom questions
+  customQuestions = [],
+  
+  // Styling
+  variant = 'default',
+  className = '',
+  
+  ...containerProps
+} = Astro.props
+
+// Field labels - easily customizable
+const labels = {
+  first_name: 'First Name',
+  last_name: 'Last Name',
+  email: 'Email Address',
+  phone: 'Phone Number',
+  address_1: 'Address Line 1',
+  address_2: 'Address Line 2',
+  postal_code: 'Postal/Zip Code',
+  availability: 'Time Availability',
+  skills: 'Skills & Interests',
+  languages: 'Languages You Speak',
+  submit: 'Submit Application'
+}
+
+// Placeholders
+const placeholders = {
+  first_name: 'First name',
+  last_name: 'Last name',
+  email: 'you@example.com',
+  phone: '(555) 123-4567',
+  address_1: '123 Main St',
+  address_2: 'Apt / Unit / Suite (optional)',
+  postal_code: 'A1A 1A1 or 12345',
+  skills: 'What would you like to help with?'
+}
+
+// Default availability options
+const availabilityOptions = [
+  { value: '2-4hrs-month', label: 'Occasional Helper (2-4 hours/month)' },
+  { value: '2-5hrs-week', label: 'Regular Volunteer (2-5 hours/week)' },
+  { value: '10plus-week', label: 'Core Team Member (10+ hours/week)' }
+]
+
+// Common languages for international movements
+const languageOptions = [
+  'English', 'Spanish', 'French', 'German', 'Italian', 'Portuguese',
+  'Chinese (Mandarin)', 'Chinese (Cantonese)', 'Arabic', 'Hindi',
+  'Russian', 'Japanese', 'Korean', 'Dutch', 'Swedish', 'Other'
+]
+
+const allFields = [...requiredFields, ...optionalFields]
+const formClasses = [
+  'volunteer-form',
+  `variant-${variant}`,
+  className
+].filter(Boolean).join(' ')
+---
+
+<div class={`volunteer-container ${variant}`} {...containerProps}>
+  <div class="form-header">
+    <h2 class="form-title">{title}</h2>
+    {subtitle && <p class="form-subtitle">{subtitle}</p>}
+  </div>
+  
+  <FormBase
+    formType="volunteer"
+    endpoint={endpoint}
+    successUrl={successUrl}
+    errorUrl={errorUrl}
+    language={language}
+    showProgress={showProgress}
+    className={formClasses}
+  >
+    <div class="form-sections">
+      <!-- Personal Information Section -->
+      <section class="form-section">
+        <h3 class="section-title">Personal Information</h3>
+        <div class="form-fields">
+          {(allFields.includes('first_name') || allFields.includes('last_name')) && (
+            <div class="field-row">
+              {allFields.includes('first_name') && (
+                <div class="field-group">
+                  <label for="first_name" class="field-label">
+                    {labels.first_name}
+                    {requiredFields.includes('first_name') && (
+                      <span class="required-asterisk" aria-label="required">*</span>
+                    )}
+                  </label>
+                  <input
+                    id="first_name"
+                    name="first_name"
+                    type="text"
+                    class="field-input"
+                    placeholder={placeholders.first_name}
+                    autocomplete="given-name"
+                    maxlength="60"
+                    required={requiredFields.includes('first_name')}
+                  />
+                </div>
+              )}
+
+              {allFields.includes('last_name') && (
+                <div class="field-group">
+                  <label for="last_name" class="field-label">
+                    {labels.last_name}
+                    {requiredFields.includes('last_name') && (
+                      <span class="required-asterisk" aria-label="required">*</span>
+                    )}
+                  </label>
+                  <input
+                    id="last_name"
+                    name="last_name"
+                    type="text"
+                    class="field-input"
+                    placeholder={placeholders.last_name}
+                    autocomplete="family-name"
+                    maxlength="60"
+                    required={requiredFields.includes('last_name')}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+
+          {allFields.includes('email') && (
+            <div class="field-group">
+              <label for="email" class="field-label">
+                {labels.email}
+                {requiredFields.includes('email') && (
+                  <span class="required-asterisk" aria-label="required">*</span>
+                )}
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="field-input"
+                placeholder={placeholders.email}
+                autocomplete="email"
+                spellcheck="false"
+                maxlength="320"
+                required={requiredFields.includes('email')}
+              />
+            </div>
+          )}
+
+          {allFields.includes('phone') && (
+            <div class="field-group">
+              <label for="phone" class="field-label">
+                {labels.phone}
+                {requiredFields.includes('phone') && (
+                  <span class="required-asterisk" aria-label="required">*</span>
+                )}
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                class="field-input"
+                placeholder={placeholders.phone}
+                autocomplete="tel"
+                maxlength="32"
+                required={requiredFields.includes('phone')}
+              />
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Address Section -->
+      {(allFields.some(field => field.startsWith('address') || field === 'postal_code')) && (
+        <section class="form-section">
+          <h3 class="section-title">Location</h3>
+          <div class="form-fields">
+            {allFields.includes('address_1') && (
+              <div class="field-group">
+                <label for="address_1" class="field-label">
+                  {labels.address_1}
+                  {requiredFields.includes('address_1') && (
+                    <span class="required-asterisk" aria-label="required">*</span>
+                  )}
+                </label>
+                <input
+                  id="address_1"
+                  name="address_1"
+                  type="text"
+                  class="field-input"
+                  placeholder={placeholders.address_1}
+                  autocomplete="address-line1"
+                  maxlength="120"
+                  required={requiredFields.includes('address_1')}
+                />
+              </div>
+            )}
+
+            {allFields.includes('address_2') && (
+              <div class="field-group">
+                <label for="address_2" class="field-label">
+                  {labels.address_2}
+                </label>
+                <input
+                  id="address_2"
+                  name="address_2"
+                  type="text"
+                  class="field-input"
+                  placeholder={placeholders.address_2}
+                  autocomplete="address-line2"
+                  maxlength="120"
+                />
+              </div>
+            )}
+
+            {allFields.includes('postal_code') && (
+              <div class="field-group">
+                <label for="postal_code" class="field-label">
+                  {labels.postal_code}
+                  {requiredFields.includes('postal_code') && (
+                    <span class="required-asterisk" aria-label="required">*</span>
+                  )}
+                </label>
+                <input
+                  id="postal_code"
+                  name="postal_code"
+                  type="text"
+                  class="field-input"
+                  placeholder={placeholders.postal_code}
+                  autocomplete="postal-code"
+                  maxlength="16"
+                  required={requiredFields.includes('postal_code')}
+                />
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Volunteer Details Section -->
+      {(allFields.includes('availability') || allFields.includes('skills') || allFields.includes('languages')) && (
+        <section class="form-section">
+          <h3 class="section-title">Volunteer Information</h3>
+          <div class="form-fields">
+            {allFields.includes('availability') && (
+              <div class="field-group">
+                <label for="availability" class="field-label">
+                  {labels.availability}
+                  {requiredFields.includes('availability') && (
+                    <span class="required-asterisk" aria-label="required">*</span>
+                  )}
+                </label>
+                <select 
+                  id="availability" 
+                  name="availability" 
+                  class="field-select"
+                  required={requiredFields.includes('availability')}
+                >
+                  <option value="">Select your availability</option>
+                  {availabilityOptions.map((option, index) => (
+                    <option value={option.value} selected={index === 1}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {allFields.includes('skills') && (
+              <div class="field-group">
+                <label for="skills" class="field-label">
+                  {labels.skills}
+                  {requiredFields.includes('skills') && (
+                    <span class="required-asterisk" aria-label="required">*</span>
+                  )}
+                </label>
+                <textarea
+                  id="skills"
+                  name="skills"
+                  class="field-textarea"
+                  placeholder={placeholders.skills}
+                  rows="3"
+                  maxlength="500"
+                  required={requiredFields.includes('skills')}
+                ></textarea>
+              </div>
+            )}
+
+            {allFields.includes('languages') && (
+              <fieldset class="languages-fieldset">
+                <legend class="section-title">{labels.languages}</legend>
+                <div class="checkbox-grid">
+                  {languageOptions.map((lang) => (
+                    <div class="checkbox-item">
+                      <label class="checkbox-label">
+                        <input
+                          type="checkbox"
+                          name="languages[]"
+                          value={lang}
+                          class="checkbox-input"
+                        />
+                        <span class="checkbox-text">{lang}</span>
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Custom Questions Section -->
+      {customQuestions.length > 0 && (
+        <section class="form-section">
+          <h3 class="section-title">Additional Information</h3>
+          <div class="form-fields">
+            {customQuestions.map((question) => (
+              <div class="field-group">
+                <label for={question.id} class="field-label">
+                  {question.label}
+                  {question.required && (
+                    <span class="required-asterisk" aria-label="required">*</span>
+                  )}
+                </label>
+                
+                {question.type === 'text' && (
+                  <input
+                    id={question.id}
+                    name={question.id}
+                    type="text"
+                    class="field-input"
+                    required={question.required}
+                  />
+                )}
+                
+                {question.type === 'select' && (
+                  <select
+                    id={question.id}
+                    name={question.id}
+                    class="field-select"
+                    required={question.required}
+                  >
+                    <option value="">Select an option</option>
+                    {question.options?.map((option) => (
+                      <option value={option}>{option}</option>
+                    ))}
+                  </select>
+                )}
+                
+                {question.type === 'textarea' && (
+                  <textarea
+                    id={question.id}
+                    name={question.id}
+                    class="field-textarea"
+                    rows="3"
+                    required={question.required}
+                  ></textarea>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button primary">
+        {labels.submit}
+      </button>
+    </div>
+
+    {variant !== 'compact' && (
+      <p class="form-note">
+        Fields marked with * are required
+      </p>
+    )}
+  </FormBase>
+</div>
+
+<style lang="scss">
+  .volunteer-container {
+    width: 100%;
+    max-width: 700px;
+    
+    &.compact {
+      max-width: 600px;
+      
+      .form-sections {
+        gap: 1.5rem;
+      }
+    }
+  }
+  
+  .form-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .form-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--color-primary-900, #1f2937);
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-subtitle {
+    color: var(--color-neutral-600, #6b7280);
+    font-size: 1.125rem;
+    margin: 0;
+  }
+  
+  .form-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .form-section {
+    background: white;
+    border: 1px solid var(--color-neutral-200, #e5e7eb);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-neutral-900, #111827);
+    margin: 0 0 1rem 0;
+    border-bottom: 2px solid var(--color-primary-500, #3b82f6);
+    padding-bottom: 0.5rem;
+  }
+  
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .field-label {
+    font-weight: 500;
+    color: var(--color-neutral-900, #111827);
+    font-size: 0.875rem;
+    
+    .required-asterisk {
+      color: var(--color-error-500, #ef4444);
+      margin-left: 0.25rem;
+    }
+  }
+  
+  .field-input, .field-select, .field-textarea {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-neutral-300, #d1d5db);
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: white;
+    font-family: inherit;
+    
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary-500, #3b82f6);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    &.field-error {
+      border-color: var(--color-error-500, #ef4444);
+      
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+    
+    &::placeholder {
+      color: var(--color-neutral-500, #6b7280);
+    }
+  }
+  
+  .field-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .languages-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .checkbox-item {
+    display: flex;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    
+    &:hover .checkbox-text {
+      color: var(--color-primary-700, #1d4ed8);
+    }
+  }
+  
+  .checkbox-input {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--color-neutral-400, #9ca3af);
+    border-radius: 0.25rem;
+    background: white;
+    cursor: pointer;
+    accent-color: var(--color-primary-600, #2563eb);
+    
+    &:focus {
+      outline: 2px solid var(--color-primary-500, #3b82f6);
+      outline-offset: 2px;
+    }
+  }
+  
+  .checkbox-text {
+    color: var(--color-neutral-700, #374151);
+    transition: color 0.2s ease;
+  }
+  
+  .form-actions {
+    margin-bottom: 1rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &.primary {
+      background: var(--color-primary-600, #2563eb);
+      color: white;
+      
+      &:hover:not(:disabled) {
+        background: var(--color-primary-700, #1d4ed8);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      }
+      
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .form-note {
+    font-size: 0.875rem;
+    color: var(--color-neutral-600, #6b7280);
+    text-align: center;
+    margin: 0;
+  }
+</style>

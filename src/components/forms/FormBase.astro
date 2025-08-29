@@ -1,0 +1,250 @@
+---
+// Generic form base component for movement organizing
+import type { HTMLAttributes } from 'astro/types'
+import { siteConfig } from '@/site.config'
+
+interface Props extends HTMLAttributes<'form'> {
+  formType: 'signup' | 'volunteer' | 'newsletter' | 'contact'
+  endpoint?: string
+  successUrl?: string
+  errorUrl?: string
+  language?: string
+  showProgress?: boolean
+  className?: string
+}
+
+const {
+  formType,
+  endpoint,
+  successUrl,
+  errorUrl,
+  language = 'en',
+  showProgress = false,
+  className = '',
+  ...formProps
+} = Astro.props
+
+// Get endpoint from props or config
+const formEndpoint = endpoint || siteConfig.forms.endpoints[formType] || `/api/forms/${formType}`
+
+// Default success/error pages
+const finalSuccessUrl = successUrl || `${siteConfig.forms.redirects.successPage}?type=${formType}`
+const finalErrorUrl = errorUrl || `${siteConfig.forms.redirects.errorPage}?type=${formType}`
+
+// Text content - easily customizable
+const text = {
+  submitting: 'Submitting...',
+  required: 'required'
+}
+---
+
+<form 
+  class={`movement-form movement-form--${formType} ${className}`}
+  action={formEndpoint}
+  method="post"
+  autocomplete="on"
+  novalidate
+  data-form-type={formType}
+  {...formProps}
+>
+  <!-- Hidden fields for form processing -->
+  <input type="hidden" name="form_type" value={formType} />
+  <input type="hidden" name="success_url" value={finalSuccessUrl} />
+  <input type="hidden" name="error_url" value={finalErrorUrl} />
+  <input type="hidden" name="language" value={language} />
+  <input type="hidden" name="timestamp" value={Date.now()} />
+  
+  {siteConfig.forms.security.enableCSRF && (
+    <input type="hidden" name="_csrf" id="csrf-token" />
+  )}
+  
+  <!-- Form progress indicator (optional) -->
+  {showProgress && (
+    <div class="form-progress" aria-live="polite" aria-atomic="true">
+      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  )}
+  
+  <!-- Form error container -->
+  <div class="form-errors" role="alert" aria-live="assertive" style="display: none;"></div>
+  
+  <!-- Form content slot -->
+  <slot />
+  
+  <!-- Form loading state -->
+  <div class="form-loading" style="display: none;" aria-live="polite">
+    <span class="loading-text">{text.submitting}</span>
+  </div>
+</form>
+
+<style lang="scss">
+  .movement-form {
+    position: relative;
+    background: var(--color-neutral-50, #f9fafb);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-neutral-200, #e5e7eb);
+    
+    &[data-submitting="true"] {
+      pointer-events: none;
+      opacity: 0.7;
+      
+      .form-loading {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 10;
+        border-radius: inherit;
+      }
+    }
+  }
+  
+  .form-progress {
+    margin-bottom: 1.5rem;
+    
+    .progress-bar {
+      width: 100%;
+      height: 0.5rem;
+      background: var(--color-neutral-200, #e5e7eb);
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--color-primary-500, #3b82f6);
+      width: 0;
+      transition: width 0.3s ease;
+    }
+  }
+  
+  .form-errors {
+    background: var(--color-error-50, #fef2f2);
+    border: 1px solid var(--color-error-200, #fecaca);
+    color: var(--color-error-800, #991b1b);
+    padding: 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1.5rem;
+    
+    ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+    
+    &:empty {
+      display: none !important;
+    }
+  }
+  
+  .loading-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: var(--color-primary-600, #2563eb);
+    
+    &::after {
+      content: '';
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid var(--color-primary-500, #3b82f6);
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Progressive enhancement: Hide loading for no-JS users */
+  .no-js .form-loading {
+    display: none !important;
+  }
+</style>
+
+<script>
+  // Progressive enhancement for form handling
+  document.addEventListener('DOMContentLoaded', function() {
+    // Remove no-js class if JavaScript is available
+    document.documentElement.classList.remove('no-js')
+    
+    const forms = document.querySelectorAll('.movement-form')
+    
+    forms.forEach(form => {
+      // Set up form submission handling
+      form.addEventListener('submit', function(e) {
+        // Add submitting state
+        form.setAttribute('data-submitting', 'true')
+        
+        // Clear previous errors
+        const errorContainer = form.querySelector('.form-errors')
+        if (errorContainer) {
+          errorContainer.innerHTML = ''
+          errorContainer.style.display = 'none'
+        }
+        
+        // Update progress if available
+        const progressFill = form.querySelector('.progress-fill')
+        if (progressFill) {
+          progressFill.style.width = '100%'
+        }
+      })
+      
+      // Handle form validation
+      const inputs = form.querySelectorAll('input[required], textarea[required], select[required]')
+      inputs.forEach(input => {
+        input.addEventListener('blur', validateField)
+        input.addEventListener('input', clearFieldError)
+      })
+    })
+    
+    function validateField(e) {
+      const field = e.target
+      const isValid = field.checkValidity()
+      
+      // Remove existing error styling
+      field.classList.remove('field-error')
+      
+      if (!isValid) {
+        field.classList.add('field-error')
+        
+        // Announce error to screen readers
+        const message = field.validationMessage
+        field.setAttribute('aria-describedby', `${field.name}-error`)
+        
+        // Create or update error message
+        let errorElement = document.getElementById(`${field.name}-error`)
+        if (!errorElement) {
+          errorElement = document.createElement('div')
+          errorElement.id = `${field.name}-error`
+          errorElement.className = 'field-error-message'
+          errorElement.setAttribute('role', 'alert')
+          field.parentNode.appendChild(errorElement)
+        }
+        errorElement.textContent = message
+      }
+    }
+    
+    function clearFieldError(e) {
+      const field = e.target
+      if (field.checkValidity()) {
+        field.classList.remove('field-error')
+        const errorElement = document.getElementById(`${field.name}-error`)
+        if (errorElement) {
+          errorElement.remove()
+        }
+        field.removeAttribute('aria-describedby')
+      }
+    }
+  })
+</script>
