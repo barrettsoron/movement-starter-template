@@ -9,6 +9,7 @@
 - 📱 **Mobile-first** - Perfect on phones, tablets, laptops—wherever your supporters are
 - 🎨 **Dark mode** - Easy on tired eyes during late-night campaign work
 - 📝 **Content ready** - Stories, Events, and Updates collections pre-configured
+- 📋 **Smart forms** - Signup and volunteer forms with privacy-respecting caching
 - 🔒 **Secure by default** - Privacy-focused headers protect your organization and supporters
 - 🚀 **Fast loading** - Static generation means your site handles traffic spikes
 - 🌍 **Testing environments** - Production, staging, and preview deployments built-in
@@ -46,7 +47,8 @@
 All site configuration is managed through environment variables. Copy `.env.example` to `.env.local` and customize:
 
 - **Site identity** - Name, tagline, description
-- **Features** - Toggle stories, events, donations, newsletter
+- **Features** - Toggle stories, events, donations, newsletter, forms
+- **Forms** - Configure signup and volunteer form endpoints and caching
 - **URLs** - Production, staging, contact information
 - **Actions** - Primary CTAs and donation links
 
@@ -67,6 +69,7 @@ All site configuration is managed through environment variables. Copy `.env.exam
 ├── src/
 │   ├── assets/         # Images, styles, fonts
 │   ├── components/     # Reusable Astro components
+│   │   └── forms/      # Form components (SignupForm, VolunteerForm)
 │   ├── content/        # Content collections
 │   │   ├── events/     # Event markdown files
 │   │   ├── stories/    # Story markdown files
@@ -113,6 +116,68 @@ capacity: 50
 
 Event details here...
 ```
+
+## Forms System
+
+The template includes a comprehensive forms system for movement organizing with signup and volunteer forms that work out of the box.
+
+### Quick Start
+
+**Basic Signup Form:**
+```astro
+---
+import SignupForm from '@components/forms/SignupForm.astro'
+---
+
+<SignupForm 
+  title="Join Our Movement"
+  requiredFields={['email']}
+  optionalFields={['name', 'phone', 'postal_code']}
+/>
+```
+
+**Volunteer Application Form:**
+```astro
+---
+import VolunteerForm from '@components/forms/VolunteerForm.astro'
+---
+
+<VolunteerForm 
+  title="Volunteer With Us"
+  requiredFields={['first_name', 'last_name', 'email']}
+  optionalFields={['phone', 'skills', 'availability']}
+/>
+```
+
+### Key Features
+
+- **Privacy-Respecting Caching** - Forms remember data across sessions (1 hour) using sessionStorage
+- **URL Prefilling** - Deep link with prefilled data: `/signup?prefill_email=user@example.com`
+- **Progressive Enhancement** - Works without JavaScript, enhanced with it
+- **Accessibility First** - Screen reader support, keyboard navigation, ARIA labels
+- **Configurable Endpoints** - Point to your backend API via environment variables
+- **Bilingual Ready** - Language detection and form customization support
+
+### Configuration
+
+Configure forms via environment variables:
+
+```bash
+# Form endpoints
+PUBLIC_FORMS_SIGNUP_ENDPOINT=https://your-api.com/signup
+PUBLIC_FORMS_VOLUNTEER_ENDPOINT=https://your-api.com/volunteer
+
+# Form behavior
+PUBLIC_FORMS_CACHE=true
+PUBLIC_FORMS_SUCCESS_PAGE=/thanks
+PUBLIC_FORMS_ERROR_PAGE=/error
+```
+
+### Documentation
+
+- **[Complete Forms Guide](./docs/forms-guide.md)** - Detailed usage, customization, and integration guide
+- **Example Pages** - Check `/signup` and `/volunteer` for working examples
+- **Backend Integration** - Examples for Node.js, Python, and serverless functions
 
 ## Deployment Environments
 
@@ -167,6 +232,8 @@ When using this template for a new project, follow these steps:
 - [ ] Configure `PUBLIC_BASE_URL` for your domain
 - [ ] Update contact email and social media handles
 - [ ] Toggle feature flags based on your needs
+- [ ] Configure form endpoints (`PUBLIC_FORMS_*_ENDPOINT`) for your backend
+- [ ] Set form behavior preferences (caching, success/error pages)
 
 ### 3. Content & Branding
 - [ ] Replace the logo in `src/assets/img/logo.svg`
