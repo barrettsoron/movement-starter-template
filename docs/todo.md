@@ -96,6 +96,19 @@ When using this template for a new project:
 - Content collections are well-defined
 - Component architecture follows best practices
 
+## 🔮 Future Features Roadmap
+
+### Stories Content Collection
+- **Status**: Temporarily removed from navigation 
+- **Goal**: Develop as a unique collection for personal narratives and testimonials
+- **Features to Add**:
+  - Rich schema with author profiles, story categories, and featured content
+  - Story templates for different narrative types (personal impact, community organizing, testimonials)
+  - Integration with campaign pages to showcase relevant stories
+  - Search and filtering by tags, location, or impact area
+  - Story submission form for community members
+- **Development Priority**: Medium - Add back after core petition and form systems are stable
+
 ## Next Steps
 
 1. Address critical issues

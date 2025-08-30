@@ -1,10 +1,10 @@
 ---
 // Generic form base component for movement organizing
 import type { HTMLAttributes } from 'astro/types'
-import { siteConfig } from '@/site.config'
+import { siteConfig } from '../../site.config.js'
 
 interface Props extends HTMLAttributes<'form'> {
-  formType: 'signup' | 'volunteer' | 'newsletter' | 'contact'
+  formType: 'signup' | 'volunteer' | 'newsletter' | 'contact' | 'petition'
   endpoint?: string
   successUrl?: string
   errorUrl?: string
@@ -39,12 +39,14 @@ const text = {
 ---
 
 <form 
-  class={`movement-form movement-form--${formType} ${className}`}
+  class={`movement-form movement-form--${formType} ${siteConfig.forms.cache.enabled ? 'prefillable-form' : ''} ${className}`}
   action={formEndpoint}
   method="post"
   autocomplete="on"
   novalidate
   data-form-type={formType}
+  data-cache-key={siteConfig.forms.cache.storageKey}
+  data-cache-ttl={siteConfig.forms.cache.ttlMs}
   {...formProps}
 >
   <!-- Hidden fields for form processing -->
@@ -248,3 +250,6 @@ const text = {
     }
   })
 </script>
+
+<!-- Enhanced form prefilling and caching -->
+<script src="/js/webforms.js" is:inline></script>

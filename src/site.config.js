@@ -44,6 +44,8 @@ export const siteConfig = {
       signup: import.meta.env.PUBLIC_FORMS_SIGNUP_ENDPOINT || '/api/forms/signup',
       volunteer: import.meta.env.PUBLIC_FORMS_VOLUNTEER_ENDPOINT || '/api/forms/volunteer',
       newsletter: import.meta.env.PUBLIC_FORMS_NEWSLETTER_ENDPOINT || '/api/forms/newsletter',
+      contact: import.meta.env.PUBLIC_FORMS_CONTACT_ENDPOINT || '/api/forms/contact',
+      petition: import.meta.env.PUBLIC_FORMS_PETITION_ENDPOINT || '/api/forms/petition',
     },
     cache: {
       enabled: import.meta.env.PUBLIC_FORMS_CACHE !== 'false',
@@ -71,12 +73,11 @@ export const siteConfig = {
     main: [
       { label: 'Home', href: '/', show: true },
       { label: 'About', href: '/about', show: true },
-      { label: 'Stories', href: '/stories', show: 'features.stories' },
       { label: 'Events', href: '/events', show: 'features.events' },
       { label: 'Updates', href: '/updates', show: 'features.updates' },
-      { label: 'Take Action', href: '/action', show: true, highlight: true },
       { label: 'Join Us', href: '/signup', show: 'features.signup' },
       { label: 'Volunteer', href: '/volunteer', show: 'features.volunteer' },
+      { label: 'Take Action', href: '/action', show: true, highlight: true },
     ],
     footer: [
       { label: 'Privacy Policy', href: '/privacy' },

@@ -1,0 +1,460 @@
+---
+// Petition form component for movement organizing - "Add Your Name" style
+import FormBase from './FormBase.astro'
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'div'> {
+  // Content customization
+  title?: string
+  subtitle?: string
+  petitionText?: string
+  
+  // Form behavior
+  endpoint?: string
+  successUrl?: string
+  errorUrl?: string
+  language?: string
+  showProgress?: boolean
+  
+  // Field configuration
+  requiredFields?: string[]
+  optionalFields?: string[]
+  
+  // Styling
+  variant?: 'default' | 'compact' | 'banner'
+  className?: string
+}
+
+const {
+  // Content
+  title = 'Add Your Name',
+  subtitle = 'Join thousands calling for change',
+  petitionText = 'We, the undersigned, call for immediate action on this critical issue affecting our community.',
+  
+  // Form config
+  endpoint,
+  successUrl,
+  errorUrl,
+  language = 'en',
+  showProgress = false,
+  
+  // Fields
+  requiredFields = ['name', 'email'],
+  optionalFields = ['phone', 'postal_code', 'comment'],
+  
+  // Styling
+  variant = 'default',
+  className = '',
+  
+  ...containerProps
+} = Astro.props
+
+// Field labels - easily customizable for different languages/contexts
+const labels = {
+  name: 'Full Name',
+  email: 'Email Address',
+  phone: 'Phone Number',
+  postal_code: 'Postal/Zip Code',
+  comment: 'Optional Comment',
+  submit: 'Add Your Name'
+}
+
+// Placeholders
+const placeholders = {
+  name: 'Your full name',
+  email: 'you@example.com',
+  phone: '(555) 123-4567',
+  postal_code: 'A1A 1A1 or 12345',
+  comment: 'Tell us why this matters to you (optional)'
+}
+
+const allFields = [...requiredFields, ...optionalFields]
+const formClasses = [
+  'petition-form',
+  `variant-${variant}`,
+  className
+].filter(Boolean).join(' ')
+---
+
+<div class={`petition-container ${variant}`} {...containerProps}>
+  <div class="petition-header">
+    <h1 class="petition-title">{title}</h1>
+    {subtitle && <p class="petition-subtitle">{subtitle}</p>}
+  </div>
+  
+  {variant !== 'compact' && (
+    <div class="petition-statement">
+      <p>{petitionText}</p>
+    </div>
+  )}
+  
+  <FormBase
+    formType="petition"
+    endpoint={endpoint}
+    successUrl={successUrl}
+    errorUrl={errorUrl}
+    language={language}
+    showProgress={showProgress}
+    className={formClasses}
+  >
+    <div class="form-fields">
+      {allFields.includes('name') && (
+        <div class="field-group">
+          <label for="name" class="field-label">
+            {labels.name}
+            {requiredFields.includes('name') && (
+              <span class="required-asterisk" aria-label="required">*</span>
+            )}
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            class="field-input"
+            placeholder={placeholders.name}
+            autocomplete="name"
+            maxlength="120"
+            required={requiredFields.includes('name')}
+          />
+        </div>
+      )}
+
+      {allFields.includes('email') && (
+        <div class="field-group">
+          <label for="email" class="field-label required">
+            {labels.email}
+            {requiredFields.includes('email') && (
+              <span class="required-asterisk" aria-label="required">*</span>
+            )}
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="field-input"
+            placeholder={placeholders.email}
+            autocomplete="email"
+            spellcheck="false"
+            maxlength="320"
+            required={requiredFields.includes('email')}
+          />
+        </div>
+      )}
+
+      {allFields.includes('phone') && (
+        <div class="field-group">
+          <label for="phone" class="field-label">
+            {labels.phone}
+            {requiredFields.includes('phone') && (
+              <span class="required-asterisk" aria-label="required">*</span>
+            )}
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            class="field-input"
+            placeholder={placeholders.phone}
+            autocomplete="tel"
+            maxlength="32"
+            required={requiredFields.includes('phone')}
+          />
+        </div>
+      )}
+
+      {allFields.includes('postal_code') && (
+        <div class="field-group">
+          <label for="postal_code" class="field-label">
+            {labels.postal_code}
+            {requiredFields.includes('postal_code') && (
+              <span class="required-asterisk" aria-label="required">*</span>
+            )}
+          </label>
+          <input
+            id="postal_code"
+            name="postal_code"
+            type="text"
+            class="field-input"
+            placeholder={placeholders.postal_code}
+            autocomplete="postal-code"
+            maxlength="16"
+            required={requiredFields.includes('postal_code')}
+          />
+        </div>
+      )}
+
+      {allFields.includes('comment') && (
+        <div class="field-group">
+          <label for="comment" class="field-label">
+            {labels.comment}
+            {requiredFields.includes('comment') && (
+              <span class="required-asterisk" aria-label="required">*</span>
+            )}
+          </label>
+          <textarea
+            id="comment"
+            name="comment"
+            class="field-input field-textarea"
+            placeholder={placeholders.comment}
+            rows="3"
+            maxlength="500"
+            required={requiredFields.includes('comment')}
+          ></textarea>
+        </div>
+      )}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button primary">
+        {labels.submit}
+      </button>
+    </div>
+
+    <p class="form-note">
+      Fields marked with * are required. Your information will be kept private and used only for this campaign.
+    </p>
+  </FormBase>
+</div>
+
+<style lang="scss">
+  .petition-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    
+    &.compact {
+      max-width: 450px;
+      
+      .form-fields {
+        gap: 1rem;
+      }
+    }
+    
+    &.banner {
+      max-width: 800px;
+      
+      .petition-header {
+        text-align: center;
+        background: var(--color-primary-50, #eff6ff);
+        padding: 2rem;
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+      }
+      
+      .petition-title {
+        font-size: 2.5rem;
+      }
+    }
+  }
+  
+  .petition-header {
+    margin-bottom: 2rem;
+    
+    .compact & {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+  }
+  
+  .petition-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-primary-900, #1e3a8a);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    
+    .compact & {
+      font-size: 1.875rem;
+    }
+  }
+  
+  .petition-subtitle {
+    color: var(--color-neutral-700, #374151);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0;
+    
+    .compact & {
+      font-size: 1.125rem;
+    }
+  }
+  
+  .petition-statement {
+    background: var(--color-neutral-50, #f9fafb);
+    border-left: 4px solid var(--color-primary-500, #3b82f6);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0.375rem;
+    
+    p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--color-neutral-800, #1f2937);
+      font-style: italic;
+    }
+    
+    .compact & {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    
+    .compact & {
+      gap: 1rem;
+    }
+  }
+  
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .field-label {
+    font-weight: 600;
+    color: var(--color-neutral-900, #111827);
+    font-size: 0.9rem;
+    
+    &.required {
+      .required-asterisk {
+        color: var(--color-error-500, #ef4444);
+        margin-left: 0.25rem;
+      }
+    }
+  }
+  
+  .field-input {
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--color-neutral-300, #d1d5db);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: white;
+    
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary-500, #3b82f6);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    &.field-error {
+      border-color: var(--color-error-500, #ef4444);
+      
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+    
+    &::placeholder {
+      color: var(--color-neutral-500, #6b7280);
+    }
+    
+    &.field-textarea {
+      resize: vertical;
+      min-height: 4rem;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+  }
+  
+  .field-error-message {
+    font-size: 0.875rem;
+    color: var(--color-error-600, #dc2626);
+    margin-top: 0.25rem;
+  }
+  
+  .form-actions {
+    margin-bottom: 1rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &.primary {
+      background: var(--color-primary-600, #2563eb);
+      color: white;
+      
+      &:hover:not(:disabled) {
+        background: var(--color-primary-700, #1d4ed8);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      }
+      
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+  
+  .form-note {
+    font-size: 0.875rem;
+    color: var(--color-neutral-600, #6b7280);
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .petition-container {
+      &.banner {
+        .petition-title {
+          font-size: 2rem;
+        }
+        
+        .petition-header {
+          padding: 1.5rem;
+        }
+      }
+    }
+    
+    .petition-title {
+      font-size: 1.875rem;
+    }
+    
+    .petition-subtitle {
+      font-size: 1.125rem;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .petition-title {
+      font-size: 1.625rem;
+    }
+    
+    .petition-statement p {
+      font-size: 1rem;
+    }
+    
+    .submit-button {
+      font-size: 1rem;
+    }
+  }
+</style>

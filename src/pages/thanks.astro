@@ -2,7 +2,7 @@
 // Generic success page for form submissions
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import { Card } from 'accessible-astro-components'
-import { siteConfig } from '@/site.config'
+import { siteConfig } from '../site.config.js'
 
 // Get form type from query parameters to customize message
 const url = new URL(Astro.request.url)
