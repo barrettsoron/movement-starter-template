@@ -47,7 +47,7 @@ const {
   
   // Fields
   requiredFields = ['first_name', 'last_name', 'email', 'phone'],
-  optionalFields = ['address_1', 'address_2', 'postal_code', 'availability', 'skills', 'languages'],
+  optionalFields = ['address_1', 'address_2', 'postal', 'availability', 'skills', 'languages'],
   
   // Custom questions
   customQuestions = [],
@@ -67,7 +67,7 @@ const labels = {
   phone: 'Phone Number',
   address_1: 'Address Line 1',
   address_2: 'Address Line 2',
-  postal_code: 'Postal/Zip Code',
+  postal: 'Postal Code',
   availability: 'Time Availability',
   skills: 'Skills & Interests',
   languages: 'Languages You Speak',
@@ -82,7 +82,7 @@ const placeholders = {
   phone: '(555) 123-4567',
   address_1: '123 Main St',
   address_2: 'Apt / Unit / Suite (optional)',
-  postal_code: 'A1A 1A1 or 12345',
+  postal: 'A1A 1A1',
   skills: 'What would you like to help with?'
 }
 
@@ -220,7 +220,7 @@ const formClasses = [
       </section>
 
       <!-- Address Section -->
-      {(allFields.some(field => field.startsWith('address') || field === 'postal_code')) && (
+      {(allFields.some(field => field.startsWith('address') || field === 'postal')) && (
         <section class="form-section">
           <h3 class="section-title">Location</h3>
           <div class="form-fields">
@@ -262,23 +262,23 @@ const formClasses = [
               </div>
             )}
 
-            {allFields.includes('postal_code') && (
+            {allFields.includes('postal') && (
               <div class="field-group">
-                <label for="postal_code" class="field-label">
-                  {labels.postal_code}
-                  {requiredFields.includes('postal_code') && (
+                <label for="postal" class="field-label">
+                  {labels.postal}
+                  {requiredFields.includes('postal') && (
                     <span class="required-asterisk" aria-label="required">*</span>
                   )}
                 </label>
                 <input
-                  id="postal_code"
-                  name="postal_code"
+                  id="postal"
+                  name="postal"
                   type="text"
                   class="field-input"
-                  placeholder={placeholders.postal_code}
+                  placeholder={placeholders.postal}
                   autocomplete="postal-code"
                   maxlength="16"
-                  required={requiredFields.includes('postal_code')}
+                  required={requiredFields.includes('postal')}
                 />
               </div>
             )}

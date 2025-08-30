@@ -27,9 +27,21 @@ const {
 // Get endpoint from props or config
 const formEndpoint = endpoint || siteConfig.forms.endpoints[formType] || `/api/forms/${formType}`
 
-// Default success/error pages
-const finalSuccessUrl = successUrl || `${siteConfig.forms.redirects.successPage}?type=${formType}`
-const finalErrorUrl = errorUrl || `${siteConfig.forms.redirects.errorPage}?type=${formType}`
+// Get base URL for absolute redirects
+const baseUrl = siteConfig.productionUrl || siteConfig.baseUrl || 'https://example.com'
+
+// Default success/error pages - must be absolute URLs
+const finalSuccessUrl = successUrl || `${baseUrl}${siteConfig.forms.redirects.successPage}?type=${formType}`
+const finalErrorUrl = errorUrl || `${baseUrl}${siteConfig.forms.redirects.errorPage}?type=${formType}`
+
+// Form type mapping for backend
+const formTypeMapping = {
+  'signup': 'general_signup',
+  'volunteer': 'volunteer',
+  'newsletter': 'newsletter',
+  'contact': 'contact',
+  'petition': 'petition'
+}
 
 // Text content - easily customizable
 const text = {
@@ -49,16 +61,18 @@ const text = {
   data-cache-ttl={siteConfig.forms.cache.ttlMs}
   {...formProps}
 >
-  <!-- Hidden fields for form processing -->
-  <input type="hidden" name="form_type" value={formType} />
-  <input type="hidden" name="success_url" value={finalSuccessUrl} />
-  <input type="hidden" name="error_url" value={finalErrorUrl} />
-  <input type="hidden" name="language" value={language} />
-  <input type="hidden" name="timestamp" value={Date.now()} />
+  <!-- IMPORTANT: Hidden fields matching webforms requirements -->
+  <input type="hidden" name="next" value={finalSuccessUrl} />
+  <!-- This determines what page you are redirected to after filling out the form. Must be absolute URL. -->
   
-  {siteConfig.forms.security.enableCSRF && (
-    <input type="hidden" name="_csrf" id="csrf-token" />
-  )}
+  <input type="hidden" name="preferred_language" value={language.toUpperCase()} />
+  <!-- This determines what language is preferred by the contact for follow-up communication. -->
+  
+  <input type="hidden" name="type" value={formTypeMapping[formType] || formType} />
+  <!-- Form type identifier for backend processing -->
+  
+  <input type="hidden" name="referral_id" value="" />
+  <!-- Optional referral tracking -->
   
   <!-- Form progress indicator (optional) -->
   {showProgress && (

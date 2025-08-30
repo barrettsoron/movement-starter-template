@@ -40,7 +40,7 @@ const {
   
   // Fields
   requiredFields = ['name', 'email'],
-  optionalFields = ['phone', 'postal_code', 'comment'],
+  optionalFields = ['phone', 'postal', 'comment'],
   
   // Styling
   variant = 'default',
@@ -54,7 +54,7 @@ const labels = {
   name: 'Full Name',
   email: 'Email Address',
   phone: 'Phone Number',
-  postal_code: 'Postal/Zip Code',
+  postal: 'Postal Code',
   comment: 'Optional Comment',
   submit: 'Add Your Name'
 }
@@ -64,7 +64,7 @@ const placeholders = {
   name: 'Your full name',
   email: 'you@example.com',
   phone: '(555) 123-4567',
-  postal_code: 'A1A 1A1 or 12345',
+  postal: 'A1A 1A1',
   comment: 'Tell us why this matters to you (optional)'
 }
 
@@ -162,23 +162,23 @@ const formClasses = [
         </div>
       )}
 
-      {allFields.includes('postal_code') && (
+      {allFields.includes('postal') && (
         <div class="field-group">
-          <label for="postal_code" class="field-label">
-            {labels.postal_code}
-            {requiredFields.includes('postal_code') && (
+          <label for="postal" class="field-label">
+            {labels.postal}
+            {requiredFields.includes('postal') && (
               <span class="required-asterisk" aria-label="required">*</span>
             )}
           </label>
           <input
-            id="postal_code"
-            name="postal_code"
+            id="postal"
+            name="postal"
             type="text"
             class="field-input"
-            placeholder={placeholders.postal_code}
+            placeholder={placeholders.postal}
             autocomplete="postal-code"
             maxlength="16"
-            required={requiredFields.includes('postal_code')}
+            required={requiredFields.includes('postal')}
           />
         </div>
       )}

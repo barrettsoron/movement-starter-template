@@ -57,7 +57,7 @@ export const siteConfig = {
       enableServerSide: import.meta.env.PUBLIC_FORMS_SERVER_VALIDATION !== 'false',
     },
     security: {
-      enableCSRF: import.meta.env.PUBLIC_FORMS_CSRF !== 'false',
+      enableCSRF: false, // Disabled - public forms don't need CSRF protection
       enableRateLimit: import.meta.env.PUBLIC_FORMS_RATE_LIMIT !== 'false',
       rateLimitPerMinute: parseInt(import.meta.env.PUBLIC_FORMS_RATE_LIMIT_PER_MINUTE) || 5,
     },
